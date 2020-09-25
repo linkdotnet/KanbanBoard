@@ -13,11 +13,22 @@ namespace LinkDotNet.KanbanBoard.Web
 {
     public class Startup
     {
+        private string _allowAllPolicyName;
+
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddGrpc();
+
+            _allowAllPolicyName = "AllowAll";
+            services.AddCors(o => o.AddPolicy(_allowAllPolicyName, builder =>
+            {
+                builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .WithExposedHeaders("Grpc-Status", "Grpc-Message", "Grpc-Encoding", "Grpc-Accept-Encoding");
+            }));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -30,9 +41,12 @@ namespace LinkDotNet.KanbanBoard.Web
 
             app.UseRouting();
 
+            app.UseGrpcWeb(new GrpcWebOptions { DefaultEnabled = true });
+            app.UseCors();
+
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGrpcService<GreeterService>();
+                endpoints.MapGrpcService<Services.Kanban>().RequireCors(_allowAllPolicyName);
 
                 endpoints.MapGet("/", async context =>
                 {

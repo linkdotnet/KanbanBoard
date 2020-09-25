@@ -1,5 +1,26 @@
 ﻿@page "/"
+@using Grpc.Net.Client
+@using LinkDotNet.KanbanBoard.Web
+@inject GrpcChannel Channel
 
-<h1>Hello, world!</h1>
+<h1>Kanban Board</h1>
+@if (_status == null)
+{
+    <p><em>Loading data from Server...</em></p>
+}
+else
+{
+    <p>@_status.WelcomeMessage</p>
+}
 
-Welcome to your new app.
+
+@code
+{
+    private HealthStatus _status;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var client = new Kanban.KanbanClient(Channel);
+        _status = await client.HealthCheckAsync(new Empty());
+    }
+}

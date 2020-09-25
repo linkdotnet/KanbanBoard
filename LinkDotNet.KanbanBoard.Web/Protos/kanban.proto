@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+option csharp_namespace = "LinkDotNet.KanbanBoard.Web";
+
+message Empty {
+}
+
+message HealthStatus {
+    string WelcomeMessage = 1;
+}
+
+service Kanban {
+	rpc HealthCheck(Empty) returns (HealthStatus);
+}
