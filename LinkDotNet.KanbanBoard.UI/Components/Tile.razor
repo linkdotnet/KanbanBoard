@@ -1,0 +1,21 @@
+﻿
+<style type="text/css">
+    .tile {
+        border-radius: 5px;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        transition: 0.3s;
+        max-width: 25%;
+        text-align: center;
+    }
+    .tile:hover {
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    }
+</style>
+<div class="tile">
+<h3>@Title</h3>
+</div>
+@code {
+    [Parameter] 
+    public string Title { get; set; }
+}
+    

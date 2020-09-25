@@ -1,6 +1,7 @@
 ﻿@page "/"
 @using Grpc.Net.Client
 @using LinkDotNet.KanbanBoard.Web
+@using LinkDotNet.KanbanBoard.UI.Components
 @inject GrpcChannel Channel
 
 <h1>Kanban Board</h1>
@@ -10,7 +11,7 @@
 }
 else
 {
-    <p>@_status.WelcomeMessage</p>
+    <Tile Title="@_status.WelcomeMessage"></Tile>
 }
 
 
