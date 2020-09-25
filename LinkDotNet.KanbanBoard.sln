@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LinkDotNet.KanbanBoard.UI",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LinkDotNet.KanbanBoard.Web", "LinkDotNet.KanbanBoard.Web\LinkDotNet.KanbanBoard.Web.csproj", "{1AA1D31C-2166-4339-B627-0F0BA9BAF149}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinkDotNet.KanbanBoard.Domain", "LinkDotNet.KanbanBoard.Domain\LinkDotNet.KanbanBoard.Domain.csproj", "{26E4FFFE-8AF9-46FE-A0B6-B20F0462E30A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{1AA1D31C-2166-4339-B627-0F0BA9BAF149}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1AA1D31C-2166-4339-B627-0F0BA9BAF149}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1AA1D31C-2166-4339-B627-0F0BA9BAF149}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26E4FFFE-8AF9-46FE-A0B6-B20F0462E30A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26E4FFFE-8AF9-46FE-A0B6-B20F0462E30A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26E4FFFE-8AF9-46FE-A0B6-B20F0462E30A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26E4FFFE-8AF9-46FE-A0B6-B20F0462E30A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

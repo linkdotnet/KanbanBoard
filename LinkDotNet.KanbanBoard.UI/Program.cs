@@ -1,6 +1,9 @@
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Blazorise;
+using Blazorise.Bootstrap;
+using Blazorise.Icons.FontAwesome;
 using Grpc.Net.Client;
 using Grpc.Net.Client.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -16,11 +19,21 @@ namespace LinkDotNet.KanbanBoard.UI
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("app");
 
+            builder.Services
+                .AddBlazorise(options =>
+                {
+                    options.ChangeTextOnKeyPress = true;
+                })
+                .AddBootstrapProviders()
+                .AddFontAwesomeIcons();
+
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
             RegisterGrpcWebEndpoint(builder);
 
-            await builder.Build().RunAsync();
+            var host = builder.Build();
+            host.Services.UseBootstrapProviders().UseFontAwesomeIcons();
+            await host.RunAsync();
         }
 
         private static void RegisterGrpcWebEndpoint(WebAssemblyHostBuilder builder)

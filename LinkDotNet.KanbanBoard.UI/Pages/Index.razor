@@ -1,5 +1,6 @@
 ﻿@page "/"
 @using Grpc.Net.Client
+@using LinkDotNet.KanbanBoard.Domain
 @using LinkDotNet.KanbanBoard.Web
 @using LinkDotNet.KanbanBoard.UI.Components
 @inject GrpcChannel Channel
@@ -11,12 +12,12 @@
 }
 else
 {
-    <Tile Title="@_status.WelcomeMessage"></Tile>
+    <TodoTile Goal="_test"></TodoTile>
 }
-
 
 @code
 {
+    private readonly Goal _test = new Goal("Some Goal Title", DateTime.Now, Array.Empty<Subtask>(), Rank.Important);
     private HealthStatus _status;
 
     protected override async Task OnInitializedAsync()

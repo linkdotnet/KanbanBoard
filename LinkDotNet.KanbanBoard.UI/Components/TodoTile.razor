@@ -1,0 +1,72 @@
+﻿@using Domain
+<style type="text/css">
+    .tile {
+        border-radius: 5px;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        transition: 0.3s;
+        max-width: 25%;
+        background: #3C74B6;
+    }
+
+    .title {
+        border-radius: 5px;
+        background: #FEFFF4;
+        word-wrap: break-word;
+        flex-grow: 4;
+    }
+
+    .title-content {
+        margin: 10px;
+    }
+
+
+    .tile:hover {
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    }
+
+    .right-box {
+        text-align: center;
+        padding-left: 10px;
+        flex-grow: 1;
+    }
+    
+    .overdue {
+        color: #ff0000;
+    }
+    .box {
+        background: #AF93EB;
+        border-radius: 7px;
+    }
+
+    .todo-box-content {
+        padding: 15px;
+        display: flex;
+    }
+
+</style>
+<div class="tile">
+    <div class="todo-box-content">
+        <div class="title">
+            <span class="title-content">@Goal.Title</span>
+        </div>
+
+        <div class="right-box">
+            <div class="rank box">
+                <p>@Goal.Rank.ShortRank</p>
+            </div>
+            <div class="subgoalcount box">
+                <p>@Goal.Subtasks.Count()</p>
+            </div>
+            <div class="deadline box">
+                <p>@Goal.Deadline.ToShortDateString()</p>
+            </div>
+        </div>
+    </div>
+</div>
+@code {
+    [Parameter] 
+    public Goal Goal { get; set; }
+
+    private bool IsOverdue => Goal.Deadline < DateTime.Now;
+}
+    
