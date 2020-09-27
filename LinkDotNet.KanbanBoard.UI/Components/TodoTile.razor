@@ -8,41 +8,60 @@
         background: #3C74B6;
     }
 
+    .tile:hover {
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    }
+
+    .todo-box-content {
+        padding: 15px;
+        display: grid;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
+        gap: 1px 1px;
+        grid-template-areas:
+                           "title title title right-box"
+                           "title title title right-box"
+                           "title title title right-box";
+    }
+
     .title {
         border-radius: 5px;
         background: #FEFFF4;
         word-wrap: break-word;
-        flex-grow: 4;
+        grid-area: title;
     }
 
     .title-content {
         margin: 10px;
     }
 
-
-    .tile:hover {
-        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-    }
-
     .right-box {
         text-align: center;
         padding-left: 10px;
-        flex-grow: 1;
+        grid-area: right-box;
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(3, minmax(0,1fr));
+        gap: 10% 0;
+        grid-template-areas:
+                           "rank"
+                           "subgoalcount"
+                           "deadline";
     }
-    
+
     .overdue {
         color: #ff0000;
     }
+
     .box {
         background: #AF93EB;
         border-radius: 7px;
     }
 
-    .todo-box-content {
-        padding: 15px;
-        display: flex;
-    }
-
+    .rank { grid-area: rank; }
+    .subgoalcount { grid-area: subgoalcount; }
+    .deadline { grid-area: deadline; }
 </style>
 <div class="tile">
     <div class="todo-box-content">
