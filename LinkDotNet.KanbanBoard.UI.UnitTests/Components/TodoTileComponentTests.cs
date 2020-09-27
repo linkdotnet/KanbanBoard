@@ -4,7 +4,7 @@ using LinkDotNet.KanbanBoard.Domain;
 using LinkDotNet.KanbanBoard.UI.Components;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace LinkDotNet.KanbanBoard.UI.UnitTests
+namespace LinkDotNet.KanbanBoard.UI.UnitTests.Components
 {
     [TestClass]
     public class TodoTileComponentTests
