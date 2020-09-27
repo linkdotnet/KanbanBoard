@@ -77,7 +77,7 @@
                 <p>@Goal.Subtasks.Count()</p>
             </div>
             <div class="deadline box">
-                <p>@GetShortDeadline()</p>
+                <p id="deadline-text">@GetShortDeadline()</p>
             </div>
         </div>
     </div>
@@ -91,8 +91,8 @@
     private string GetShortDeadline()
     {
         var isCurrentYear = Goal.Deadline.Year == DateTime.Now.Year;
-        var year = isCurrentYear ? string.Empty : " YY";
-        return Goal.Deadline.ToString($"dd'.' MMM{year}");
+        var year = isCurrentYear ? string.Empty : " yyyy";
+        return Goal.Deadline.ToString($"d'.' MMM'.'{year}");
     }
 }
     
