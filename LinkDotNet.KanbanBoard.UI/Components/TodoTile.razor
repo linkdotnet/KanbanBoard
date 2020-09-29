@@ -1,4 +1,5 @@
 ﻿@using Domain
+@using System.ComponentModel.DataAnnotations
 <style type="text/css">
     .tile {
         border-radius: 5px;
@@ -82,10 +83,9 @@
     </div>
 </div>
 @code {
-    [Parameter] 
+    [Required]
+    [Parameter]
     public Goal Goal { get; set; }
-
-    private bool IsOverdue => Goal.Deadline < DateTime.Now;
 
     private string GetShortDeadline()
     {

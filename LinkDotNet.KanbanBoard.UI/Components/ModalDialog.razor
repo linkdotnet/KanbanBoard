@@ -1,4 +1,5 @@
-﻿<div class="modal @_modalClass" tabindex="-1" role="dialog" style="display:@_modalDisplay; overflow-y: auto;">
+﻿@using System.ComponentModel.DataAnnotations
+<div class="modal @_modalClass" tabindex="-1" role="dialog" style="display:@_modalDisplay; overflow-y: auto;">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -21,9 +22,11 @@
 
 @code {
     [Parameter]
+    [Required]
     public string Title { get; set; }
 
     [Parameter]
+    [Required]
     public RenderFragment ChildContent { get; set; }
 
     private string _modalDisplay = "none;";
