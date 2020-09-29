@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LinkDotNet.KanbanBoard.Web"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LinkDotNet.KanbanBoard.Domain", "LinkDotNet.KanbanBoard.Domain\LinkDotNet.KanbanBoard.Domain.csproj", "{26E4FFFE-8AF9-46FE-A0B6-B20F0462E30A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinkDotNet.KanbanBoard.UI.UnitTests", "LinkDotNet.KanbanBoard.UI.UnitTests\LinkDotNet.KanbanBoard.UI.UnitTests.csproj", "{FCFA285B-CBDB-496C-8A27-5DB7B9751EB2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LinkDotNet.KanbanBoard.UI.UnitTests", "LinkDotNet.KanbanBoard.UI.UnitTests\LinkDotNet.KanbanBoard.UI.UnitTests.csproj", "{FCFA285B-CBDB-496C-8A27-5DB7B9751EB2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

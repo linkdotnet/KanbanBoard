@@ -12,12 +12,20 @@
 }
 else
 {
-    <TodoTile Goal="_test"></TodoTile>
+    <GoalContainer Goals="_goals">
+        <Swimlane GoalStatus="GoalStatus.Todo"></Swimlane>
+        <Swimlane GoalStatus="GoalStatus.InProgress"></Swimlane>
+        <Swimlane GoalStatus="GoalStatus.Completed"></Swimlane>
+    </GoalContainer>
 }
 
 @code
 {
-    private readonly Goal _test = new Goal("Some Goal Title", DateTime.Now, Array.Empty<Subtask>(), Rank.Important);
+    private readonly List<Goal> _goals = new List<Goal>
+    {
+        new Goal("Some Goal Title", DateTime.Now, Array.Empty<Subtask>(), Rank.Important, GoalStatus.Completed), 
+        new Goal("Some Goal Title 2", DateTime.Now, Array.Empty<Subtask>(), Rank.Important, GoalStatus.InProgress)
+    };
     private HealthStatus _status;
 
     protected override async Task OnInitializedAsync()

@@ -1,0 +1,15 @@
+﻿@using System.ComponentModel.DataAnnotations
+@using LinkDotNet.KanbanBoard.Domain
+<div class="goal-container">
+    <CascadingValue Value="this">
+        @ChildContent
+    </CascadingValue>
+</div>
+@code {
+    [Parameter]
+    [Required]
+    public List<Goal> Goals { get; set; }
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+}

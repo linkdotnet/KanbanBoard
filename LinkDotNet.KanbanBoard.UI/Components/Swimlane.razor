@@ -1,0 +1,25 @@
+﻿@using LinkDotNet.KanbanBoard.Domain
+<div>
+    <h3>@GoalStatus.Key (@Goals.Count)</h3>
+    <ul>
+        @foreach (var goal in Goals)
+        {
+            <li><TodoTile Goal="goal"></TodoTile></li>
+        }
+    </ul>
+</div>
+@code {
+    [CascadingParameter]
+    private GoalContainer GoalContainer { get; set; }
+
+    [Parameter]
+    public GoalStatus GoalStatus { get; set; }
+
+    private List<Goal> Goals = new List<Goal>();
+
+    protected override void OnParametersSet()
+    {
+        Goals.Clear();
+        Goals.AddRange(GoalContainer.Goals.Where(x => x.GoalStatus == GoalStatus));
+    }
+}
