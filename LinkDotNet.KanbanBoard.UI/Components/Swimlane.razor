@@ -49,7 +49,6 @@
 
     protected override void OnParametersSet()
     {
-        Console.WriteLine("I was called");
         _goals.Clear();
         _goals.AddRange(GoalContainer.Goals.Where(x => x.GoalStatus == GoalStatus));
     }
