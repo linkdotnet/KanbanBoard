@@ -7,7 +7,7 @@
     }
      
 </style>
-<div class="goal-container">
+<div class="goal-container">    
     <CascadingValue Value="this">
         @ChildContent
     </CascadingValue>
@@ -19,4 +19,11 @@
 
     [Parameter]
     public RenderFragment ChildContent { get; set; }
+
+    public Goal Payload { get; set; }
+
+    public void UpdateGoalStatus(GoalStatus newStatus)
+    {
+        Payload.GoalStatus = newStatus;
+    }
 }

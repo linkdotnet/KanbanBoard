@@ -11,18 +11,29 @@
 
     .goal-list {
         list-style: none;
+        border: 1px dashed grey;
+        padding: 30px;
     }
 
     .goal-item {
         margin-bottom: 10px;
     }
+
+    .can-drop {
+        border: 2px dashed green;
+    }
 </style>
-<div class="goal-status">
-    <h3>@GoalStatus.Key (@Goals.Count)</h3>
-    <ul class="goal-list">
-        @foreach (var goal in Goals)
+<div class="goal-status"
+     ondragover="event.preventDefault();"
+     ondragstart="event.dataTransfer.setData('', event.target.id);"
+     @ondrop="HandleDrop"
+     @ondragenter="HandleDragEnter"
+     @ondragleave="HandleDragLeave">
+    <h3>@GoalStatus.Key (@_goals.Count)</h3>
+    <ul class="goal-list @_dropClass">
+        @foreach (var goal in _goals)
         {
-            <li class ="goal-item"><TodoTile Goal="goal"></TodoTile></li>
+            <li class ="goal-item" draggable="true" @ondragstart="() => HandleGoalItemDragStart(goal)"><TodoTile Goal="goal"></TodoTile></li>
         }
     </ul>
 </div>
@@ -33,11 +44,39 @@
     [Parameter]
     public GoalStatus GoalStatus { get; set; }
 
-    private List<Goal> Goals = new List<Goal>();
+    private List<Goal> _goals = new List<Goal>();
+
+    private string _dropClass = string.Empty;
 
     protected override void OnParametersSet()
     {
-        Goals.Clear();
-        Goals.AddRange(GoalContainer.Goals.Where(x => x.GoalStatus == GoalStatus));
+        _goals.Clear();
+        _goals.AddRange(GoalContainer.Goals.Where(x => x.GoalStatus == GoalStatus));
+    }
+
+    private void HandleDragEnter()
+    {
+        if (GoalContainer.Payload.GoalStatus == GoalStatus)
+        {
+            return;
+        }
+
+        _dropClass = "can-drop";
+    }
+
+    private void HandleDragLeave()
+    {
+        _dropClass = string.Empty;
+    }
+
+    private void HandleDrop()
+    {
+        _dropClass = string.Empty;
+        GoalContainer.UpdateGoalStatus(GoalStatus);
+    }
+
+    private void HandleGoalItemDragStart(Goal goal)
+    {
+        GoalContainer.Payload = goal;
     }
 }

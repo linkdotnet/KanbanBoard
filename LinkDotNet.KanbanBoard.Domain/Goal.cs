@@ -18,6 +18,6 @@ namespace LinkDotNet.KanbanBoard.Domain
         public DateTime Deadline { get; private set; }
         public IEnumerable<Subtask> Subtasks { get; private set; }
         public Rank Rank { get; private set; }
-        public GoalStatus GoalStatus { get; private set; }
+        public GoalStatus GoalStatus { get; set; }
     }
 }
