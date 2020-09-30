@@ -1,5 +1,12 @@
 ﻿@using System.ComponentModel.DataAnnotations
 @using LinkDotNet.KanbanBoard.Domain
+<style type="text/css">
+    .goal-container {
+        display: flex;
+        justify-content: space-around;
+    }
+     
+</style>
 <div class="goal-container">
     <CascadingValue Value="this">
         @ChildContent

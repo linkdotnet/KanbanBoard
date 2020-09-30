@@ -24,7 +24,10 @@ else
     private readonly List<Goal> _goals = new List<Goal>
     {
         new Goal("Some Goal Title", DateTime.Now, Array.Empty<Subtask>(), Rank.Important, GoalStatus.Completed), 
-        new Goal("Some Goal Title 2", DateTime.Now, Array.Empty<Subtask>(), Rank.Important, GoalStatus.InProgress)
+        new Goal("Some Goal Title 2", DateTime.Now, Array.Empty<Subtask>(), Rank.Important, GoalStatus.InProgress),
+        new Goal("Some Goal Title 3", DateTime.Now, Array.Empty<Subtask>(), Rank.Important, GoalStatus.InProgress),
+        new Goal("Some Goal Title 4", DateTime.Now, Array.Empty<Subtask>(), Rank.ImportantAndUrgent, GoalStatus.Todo),
+        new Goal("Some Goal Title 5", DateTime.Now, Array.Empty<Subtask>(), Rank.Urgent, GoalStatus.Todo),
     };
     private HealthStatus _status;
 

@@ -1,10 +1,28 @@
 ﻿@using LinkDotNet.KanbanBoard.Domain
-<div>
+<style type="text/css">
+    .goal-status {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .goal-status ul {
+        flex: 1;
+    }
+
+    .goal-list {
+        list-style: none;
+    }
+
+    .goal-item {
+        margin-bottom: 10px;
+    }
+</style>
+<div class="goal-status">
     <h3>@GoalStatus.Key (@Goals.Count)</h3>
-    <ul>
+    <ul class="goal-list">
         @foreach (var goal in Goals)
         {
-            <li><TodoTile Goal="goal"></TodoTile></li>
+            <li class ="goal-item"><TodoTile Goal="goal"></TodoTile></li>
         }
     </ul>
 </div>
