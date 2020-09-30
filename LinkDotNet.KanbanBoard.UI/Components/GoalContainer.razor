@@ -25,5 +25,9 @@
     public void UpdateGoalStatus(GoalStatus newStatus)
     {
         Payload.GoalStatus = newStatus;
+
+        // We have to tell Blazor that the State has changed
+        // As we do not directly change the 
+        StateHasChanged();
     }
 }

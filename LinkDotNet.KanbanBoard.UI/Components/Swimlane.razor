@@ -29,27 +29,27 @@
      @ondrop="HandleDrop"
      @ondragenter="HandleDragEnter"
      @ondragleave="HandleDragLeave">
+
     <h3>@GoalStatus.Key (@_goals.Count)</h3>
     <ul class="goal-list @_dropClass">
         @foreach (var goal in _goals)
         {
-            <li class ="goal-item" draggable="true" @ondragstart="() => HandleGoalItemDragStart(goal)"><TodoTile Goal="goal"></TodoTile></li>
+            <li class="goal-item" draggable="true" @ondragstart="() => HandleGoalItemDragStart(goal)"><TodoTile Goal="goal"></TodoTile></li>
         }
     </ul>
 </div>
 @code {
     [CascadingParameter]
     private GoalContainer GoalContainer { get; set; }
-
     [Parameter]
     public GoalStatus GoalStatus { get; set; }
 
     private List<Goal> _goals = new List<Goal>();
-
     private string _dropClass = string.Empty;
 
     protected override void OnParametersSet()
     {
+        Console.WriteLine("I was called");
         _goals.Clear();
         _goals.AddRange(GoalContainer.Goals.Where(x => x.GoalStatus == GoalStatus));
     }
