@@ -5,6 +5,8 @@
 @using LinkDotNet.KanbanBoard.UI.Components
 @inject GrpcChannel Channel
 
+<div class="content">
+
 <h1>Kanban Board</h1>
 @if (_status == null)
 {
@@ -18,7 +20,7 @@ else
         <Swimlane GoalStatus="GoalStatus.Completed"></Swimlane>
     </GoalContainer>
 }
-
+</div>
 @code
 {
     private readonly List<Goal> _goals = new List<Goal>
