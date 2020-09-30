@@ -14,7 +14,7 @@ namespace LinkDotNet.KanbanBoard.UI.UnitTests.Components
         {
             var date = new DateTime(DateTime.Now.Year, 1, 1);
             using var context = new Bunit.TestContext();
-            var goal = new Goal("Some-Title", date, Array.Empty<Subtask>(),  Rank.Important);
+            var goal = new Goal("Some-Title", date, Array.Empty<Subtask>(),  Rank.Important, GoalStatus.Completed);
 
             var todoTile = context.RenderComponent<TodoTile>(("Goal", goal));
             var element = todoTile.Find("#deadline-text").InnerHtml;
@@ -27,7 +27,7 @@ namespace LinkDotNet.KanbanBoard.UI.UnitTests.Components
         {
             var date = new DateTime(2100, 1, 1);
             using var context = new Bunit.TestContext();
-            var goal = new Goal("Some-Title", date, Array.Empty<Subtask>(), Rank.Important);
+            var goal = new Goal("Some-Title", date, Array.Empty<Subtask>(), Rank.Important, GoalStatus.Completed);
 
             var todoTile = context.RenderComponent<TodoTile>(("Goal", goal));
             var element = todoTile.Find("#deadline-text").InnerHtml;
