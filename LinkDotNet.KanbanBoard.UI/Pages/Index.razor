@@ -4,12 +4,11 @@
 @using LinkDotNet.KanbanBoard.Web
 @using LinkDotNet.KanbanBoard.UI.Components
 @using Grpc.Core
-@using System.Diagnostics
 @inject GrpcChannel Channel
 
 <div class="content">
 
-<h1>Kanban Board</h1>
+<h1 style="color:whitesmoke">Kanban Board</h1>
 @if (_status == null)
 {
     <p><em>Loading data from Server...</em></p>
@@ -34,8 +33,6 @@ else
         var client = new Kanban.KanbanClient(Channel);
         await foreach (var data in client.GetAllGoals(new Empty()).ResponseStream.ReadAllAsync())
         {
-            Console.WriteLine(data.ToString());
-
             var rank = Rank.Create(data.Rank).Value;
 
             var goal = new Goal(data.Title, new DateTime(data.Deadline), Array.Empty<Subtask>(), rank, GoalStatus.Create(data.GoalStatus).Value);
