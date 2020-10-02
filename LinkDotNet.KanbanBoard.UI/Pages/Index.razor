@@ -3,6 +3,8 @@
 @using LinkDotNet.KanbanBoard.Domain
 @using LinkDotNet.KanbanBoard.Web
 @using LinkDotNet.KanbanBoard.UI.Components
+@using Grpc.Core
+@using System.Diagnostics
 @inject GrpcChannel Channel
 
 <div class="content">
@@ -23,19 +25,21 @@ else
 </div>
 @code
 {
-    private readonly List<Goal> _goals = new List<Goal>
-    {
-        new Goal("Some Goal Title", DateTime.Now, Array.Empty<Subtask>(), Rank.Important, GoalStatus.Completed), 
-        new Goal("Some Goal Title 2", DateTime.Now, Array.Empty<Subtask>(), Rank.Important, GoalStatus.InProgress),
-        new Goal("Some Goal Title 3", DateTime.Now, Array.Empty<Subtask>(), Rank.Important, GoalStatus.InProgress),
-        new Goal("Some Goal Title 4", DateTime.Now, Array.Empty<Subtask>(), Rank.ImportantAndUrgent, GoalStatus.Todo),
-        new Goal("Some Goal Title 5", DateTime.Now, Array.Empty<Subtask>(), Rank.Urgent, GoalStatus.Todo),
-    };
-    private HealthStatus _status;
+
+    private readonly List<Goal> _goals = new List<Goal>();
+    private readonly GoalDto _status = new GoalDto {Title = "Test"};
 
     protected override async Task OnInitializedAsync()
     {
         var client = new Kanban.KanbanClient(Channel);
-        _status = await client.HealthCheckAsync(new Empty());
+        await foreach (var data in client.GetAllGoals(new Empty()).ResponseStream.ReadAllAsync())
+        {
+            Console.WriteLine(data.ToString());
+
+            var rank = Rank.Create(data.Rank).Value;
+
+            var goal = new Goal(data.Title, new DateTime(data.Deadline), Array.Empty<Subtask>(), rank, GoalStatus.Create(data.GoalStatus).Value);
+            _goals.Add(goal);
+        }
     }
 }

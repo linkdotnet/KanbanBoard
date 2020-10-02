@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using LinkDotNet.KanbanBoard.Infrastructure;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,6 +25,8 @@ namespace LinkDotNet.KanbanBoard.Web
                     .AllowAnyHeader()
                     .WithExposedHeaders("Grpc-Status", "Grpc-Message", "Grpc-Encoding", "Grpc-Accept-Encoding");
             }));
+
+            services.AddScoped<IKanbanRepository, KanbanRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

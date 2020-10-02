@@ -16,6 +16,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\LinkDotNet.KanbanBoard.Infrastructure\LinkDotNet.KanbanBoard.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Protobuf Include="Protos\kanban.proto" />
   </ItemGroup>
 
