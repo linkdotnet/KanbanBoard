@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Bunit;
 using LinkDotNet.KanbanBoard.Domain;
 using LinkDotNet.KanbanBoard.UI.Components;
@@ -9,6 +10,23 @@ namespace LinkDotNet.KanbanBoard.UI.UnitTests.Components
     [TestClass]
     public class TodoTileComponentTests
     {
+        [TestMethod]
+        public async Task GivenGiven_WhenWhen_ThenThen()
+        {
+            var t = await GetValues();
+
+            foreach (var s in t)
+            {
+                var result = Rank.Create(s);
+                Console.WriteLine(result.IsSuccess);
+            }
+        }
+
+        private Task<string[]> GetValues()
+        {
+            return Task.FromResult(new[] {"Important", "Important"});
+        }
+
         [TestMethod]
         public void GivenDeadlineThisYear_WhenRendering_ThenYearShouldBeOmitted()
         {
