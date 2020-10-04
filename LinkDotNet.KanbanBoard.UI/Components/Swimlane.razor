@@ -2,7 +2,9 @@
 <style type="text/css">
     .goal-status {
         display: flex;
+        justify-content: space-between; 
         flex-direction: column;
+        width: 32%;
     }
 
     .goal-status ul {
@@ -64,6 +66,7 @@
     public GoalStatus GoalStatus { get; set; }
 
     private List<Goal> _goals = new List<Goal>();
+
     private string _dropClass = string.Empty;
 
     protected override void OnParametersSet()
