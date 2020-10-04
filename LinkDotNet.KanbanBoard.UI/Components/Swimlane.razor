@@ -39,6 +39,25 @@
         margin-bottom: 10px;
         background-color: #479A59;
     }
+
+    .button-add-goal {
+        background-color: Transparent;
+        background-repeat: no-repeat;
+        border: none;
+        cursor: pointer;
+        overflow: hidden;
+        outline: none;
+    }
+    .button-add-goal:active {
+        transform: translateY(-1px);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        outline: none;
+    }
+
+    .button-add-goal:focus {
+        outline: 0;
+    }
+
 </style>
 <div class="goal-status"
      ondragover="event.preventDefault();"
@@ -47,9 +66,14 @@
      @ondragenter="HandleDragEnter"
      @ondragleave="HandleDragLeave">
     
-    <div class="swimlane-header">
+    <div class="swimlane-header" draggable="false">
         <div class="swimlane-header-text"><span class="badge">@_goals.Count</span><em>@GoalStatus.Key</em></div>
-        <div class="swimlane-header-add"></div>
+        <div class="swimlane-header-add">
+            @if (CanAddGoals)
+            {
+                <button class="button-add-goal"><img src="img/Add.svg" alt="Add Goal"/></button>
+            }
+        </div>
     </div>
     
     <ul class="goal-list @_dropClass">
@@ -64,6 +88,8 @@
     private GoalContainer GoalContainer { get; set; }
     [Parameter]
     public GoalStatus GoalStatus { get; set; }
+    [Parameter]
+    public bool CanAddGoals { get; set; }
 
     private List<Goal> _goals = new List<Goal>();
 
@@ -77,7 +103,7 @@
 
     private void HandleDragEnter()
     {
-        if (GoalContainer.Payload.GoalStatus == GoalStatus)
+        if (GoalContainer.Payload == null || GoalContainer.Payload.GoalStatus == GoalStatus)
         {
             return;
         }
