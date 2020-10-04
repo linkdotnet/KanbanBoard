@@ -7,11 +7,19 @@
 @using LinkDotNet.KanbanBoard.UI.Features
 @inject GrpcChannel Channel
 @inherits BlazorState.BlazorStateComponent
+<style type="text/css">.kanban-header {
+     overflow-x: hidden;
+     margin: 0 -9999rem;
+     padding: 0.25rem 9999rem;
+     background-color: #A7A7A7;
+     color: #262626;
+ }</style>
 
+<div class="kanban-header">
+    <h2>Kanban Board</h2>
+</div>
 <div class="content">
-
-<h1 style="color:whitesmoke">Kanban Board</h1>
-@if (_status == null)
+    @if (_status == null)
 {
     <p><em>Loading data from Server...</em></p>
 }
