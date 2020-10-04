@@ -5,13 +5,20 @@ using LinkDotNet.KanbanBoard.Domain;
 
 namespace LinkDotNet.KanbanBoard.UI.Features
 {
-    public partial class GoalState : State<GoalState>
+    public partial class GoalState : State<GoalState>, ICloneable
     {
-        public IList<Goal> Goals { get; private set; }
+        private List<Goal> _goals;
+        public IReadOnlyList<Goal> Goals => _goals;
 
         public override void Initialize()
         {
-            Goals = new List<Goal>();
+            _goals = new List<Goal>();
+        }
+
+        public object Clone()
+        {
+            var newState = new GoalState {_goals = new List<Goal>(_goals)};
+            return newState;
         }
     }
 }

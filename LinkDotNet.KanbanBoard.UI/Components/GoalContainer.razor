@@ -15,7 +15,7 @@
 @code {
     [Parameter]
     [Required]
-    public IList<Goal> Goals { get; set; }
+    public IReadOnlyCollection<Goal> Goals { get; set; }
 
     [Parameter]
     public RenderFragment ChildContent { get; set; }
