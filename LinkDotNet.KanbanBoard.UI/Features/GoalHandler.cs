@@ -11,11 +11,11 @@ namespace LinkDotNet.KanbanBoard.UI.Features
 {
     public partial class GoalState
     {
-        public class GoalHandler : ActionHandler<LoadGoalsAction>
+        public class LoadGoalsHandler : ActionHandler<LoadGoalsAction>
         {
             private GoalState GoalState => Store.GetState<GoalState>();
 
-            public GoalHandler(IStore store) : base(store)
+            public LoadGoalsHandler(IStore store) : base(store)
             {
             }
 
@@ -27,6 +27,21 @@ namespace LinkDotNet.KanbanBoard.UI.Features
                     GoalStatus.Create(goalDto.GoalStatus).Value));
                 GoalState._goals.AddRange(goals);
 
+                return Unit.Task;
+            }
+        }
+
+        public class AddGoalHandler : ActionHandler<AddGoalAction>
+        {
+            private GoalState GoalState => Store.GetState<GoalState>();
+
+            public AddGoalHandler(IStore aStore) : base(aStore)
+            {
+            }
+
+            public override Task<Unit> Handle(AddGoalAction aAction, CancellationToken aCancellationToken)
+            {
+                GoalState._goals.Add(aAction.Goal);
                 return Unit.Task;
             }
         }

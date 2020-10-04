@@ -1,4 +1,6 @@
-﻿using BlazorState;
+﻿using System.Collections.Generic;
+using BlazorState;
+using LinkDotNet.KanbanBoard.Domain;
 using LinkDotNet.KanbanBoard.Web;
 
 namespace LinkDotNet.KanbanBoard.UI.Features
@@ -13,6 +15,16 @@ namespace LinkDotNet.KanbanBoard.UI.Features
             }
 
             public GoalListDto GoalListDto { get; }
+        }
+
+        public class AddGoalAction : IAction
+        {
+            public AddGoalAction(Goal goal)
+            {
+                Goal = goal;
+            }
+
+            public Goal Goal { get; }
         }
     }
 }

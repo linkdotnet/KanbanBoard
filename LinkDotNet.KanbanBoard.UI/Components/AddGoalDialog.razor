@@ -1,0 +1,7 @@
+﻿@using LinkDotNet.KanbanBoard.Domain
+@code {
+    [Parameter]
+    public EventCallback<Goal> GoalAddedCallback { get; set; }
+
+    private ModalDialog Dialog { get; set; }
+}
