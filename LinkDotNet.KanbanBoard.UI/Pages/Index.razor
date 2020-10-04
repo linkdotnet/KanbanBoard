@@ -4,7 +4,9 @@
 @using LinkDotNet.KanbanBoard.Web
 @using LinkDotNet.KanbanBoard.UI.Components
 @using Grpc.Core
+@using LinkDotNet.KanbanBoard.UI.Features
 @inject GrpcChannel Channel
+@inherits BlazorState.BlazorStateComponent
 
 <div class="content">
 
@@ -15,7 +17,7 @@
 }
 else
 {
-    <GoalContainer Goals="_goals">
+    <GoalContainer Goals="GoalState.Goals">
         <Swimlane GoalStatus="GoalStatus.Todo"></Swimlane>
         <Swimlane GoalStatus="GoalStatus.InProgress"></Swimlane>
         <Swimlane GoalStatus="GoalStatus.Completed"></Swimlane>
@@ -24,19 +26,16 @@ else
 </div>
 @code
 {
-
-    private readonly List<Goal> _goals = new List<Goal>();
     private readonly GoalDto _status = new GoalDto {Title = "Test"};
+
+    private GoalState GoalState => GetState<GoalState>();
 
     protected override async Task OnInitializedAsync()
     {
         var client = new Kanban.KanbanClient(Channel);
         await foreach (var data in client.GetAllGoals(new Empty()).ResponseStream.ReadAllAsync())
         {
-            var rank = Rank.Create(data.Rank).Value;
-
-            var goal = new Goal(data.Title, new DateTime(data.Deadline), Array.Empty<Subtask>(), rank, GoalStatus.Create(data.GoalStatus).Value);
-            _goals.Add(goal);
+            await Mediator.Send(new GoalState.AddGoalAction(data));
         }
     }
 }
