@@ -11,7 +11,7 @@ namespace LinkDotNet.KanbanBoard.UI.Features
 {
     public partial class GoalState
     {
-        public class GoalHandler : ActionHandler<AddGoalAction>
+        public class GoalHandler : ActionHandler<LoadGoalsAction>
         {
             private GoalState GoalState => Store.GetState<GoalState>();
 
@@ -19,13 +19,13 @@ namespace LinkDotNet.KanbanBoard.UI.Features
             {
             }
 
-            public override Task<Unit> Handle(AddGoalAction aAction, CancellationToken aCancellationToken)
+            public override Task<Unit> Handle(LoadGoalsAction aAction, CancellationToken aCancellationToken)
             {
-                var dto = aAction.GoalDto;
-                var goal = new Goal(dto.Title, new DateTime(dto.Deadline), Array.Empty<Subtask>(),
-                    Rank.Create(dto.Rank).Value,
-                    GoalStatus.Create(dto.GoalStatus).Value);
-                GoalState._goals.Add(goal);
+                var dto = aAction.GoalListDto;
+                var goals = dto.GoalDto.Select(goalDto => new Goal(goalDto.Title, new DateTime(goalDto.Deadline), Array.Empty<Subtask>(),
+                    Rank.Create(goalDto.Rank).Value,
+                    GoalStatus.Create(goalDto.GoalStatus).Value));
+                GoalState._goals.AddRange(goals);
 
                 return Unit.Task;
             }

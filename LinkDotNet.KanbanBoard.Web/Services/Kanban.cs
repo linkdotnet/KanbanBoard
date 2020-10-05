@@ -1,7 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Grpc.Core;
 using LinkDotNet.KanbanBoard.Infrastructure;
-using Google.Protobuf.WellKnownTypes;
 
 namespace LinkDotNet.KanbanBoard.Web.Services
 {
@@ -14,19 +14,17 @@ namespace LinkDotNet.KanbanBoard.Web.Services
             _kanbanRepository = kanbanRepository;
         }
 
-        public override async Task GetAllGoals(Empty request, IServerStreamWriter<GoalDto> responseStream, ServerCallContext context)
+        public override async Task<GoalListDto> GetAllGoals(Empty request, ServerCallContext context)
         {
-            foreach (var goal in await _kanbanRepository.GetAllGoalsAsync())
+            var allGoals = await _kanbanRepository.GetAllGoalsAsync();
+            var goalsDto = allGoals.Select(goal => new GoalDto
             {
-                var goalDto = new GoalDto
-                {
-                    Title = goal.Title,
-                    GoalStatus = goal.GoalStatus.Key,
-                    Deadline = goal.Deadline.Ticks,
-                    Rank = goal.Rank.Key
-                };
-                await responseStream.WriteAsync(goalDto);
-            }
+                Title = goal.Title,
+                GoalStatus = goal.GoalStatus.Key,
+                Deadline = goal.Deadline.Ticks,
+                Rank = goal.Rank.Key
+            });
+            return new GoalListDto { GoalDto = { goalsDto } };
         }
     }
 }
