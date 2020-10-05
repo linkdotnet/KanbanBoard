@@ -5,14 +5,14 @@ namespace LinkDotNet.KanbanBoard.UI.Features
 {
     public partial class GoalState
     {
-        public class AddGoalAction : IAction
+        public class LoadGoalsAction : IAction
         {
-            public AddGoalAction(GoalDto goalDto)
+            public LoadGoalsAction(GoalListDto goalListDto)
             {
-                GoalDto = goalDto;
+                GoalListDto = goalListDto;
             }
 
-            public GoalDto GoalDto { get; }
+            public GoalListDto GoalListDto { get; }
         }
     }
 }

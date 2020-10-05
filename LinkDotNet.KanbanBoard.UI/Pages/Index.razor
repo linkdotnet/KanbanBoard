@@ -3,7 +3,6 @@
 @using LinkDotNet.KanbanBoard.Domain
 @using LinkDotNet.KanbanBoard.Web
 @using LinkDotNet.KanbanBoard.UI.Components
-@using Grpc.Core
 @using LinkDotNet.KanbanBoard.UI.Features
 @inject GrpcChannel Channel
 @inherits BlazorState.BlazorStateComponent
@@ -41,9 +40,7 @@ else
     protected override async Task OnInitializedAsync()
     {
         var client = new Kanban.KanbanClient(Channel);
-        await foreach (var data in client.GetAllGoals(new Empty()).ResponseStream.ReadAllAsync())
-        {
-            await Mediator.Send(new GoalState.AddGoalAction(data));
-        }
+        var goalListDto = await client.GetAllGoalsAsync(new Empty());
+        await Mediator.Send(new GoalState.LoadGoalsAction(goalListDto));
     }
 }

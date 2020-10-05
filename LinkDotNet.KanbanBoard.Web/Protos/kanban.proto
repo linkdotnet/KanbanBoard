@@ -10,6 +10,10 @@ message SubtaskDto {
 	int64 DurationTime = 2;
 }
 
+message GoalListDto {
+	repeated GoalDto GoalDto = 1;
+}
+
 message GoalDto {
     string Title = 1;
     int64 Deadline = 2;
@@ -20,5 +24,5 @@ message GoalDto {
 }
 
 service Kanban {
-	rpc GetAllGoals(Empty) returns (stream GoalDto);
+	rpc GetAllGoals(Empty) returns (GoalListDto);
 }
