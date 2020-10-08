@@ -1,7 +1,82 @@
 ﻿@using LinkDotNet.KanbanBoard.Domain
+<style type="text/css">
+    .add-goal-grid-container {
+        display: grid;
+        grid-template-columns: 1fr 1.5fr;
+        grid-template-rows: repeat(5, 1fr);
+        gap: 1px 1px;
+        grid-template-areas:
+                           "add-goal-title add-goal-title-value"
+                           "add-goal-rank add-goal-rank-value"
+                           "add-goal-deadline add-goal-deadline-value"
+                           "add-goal-subgoals add-goal-subgoals"
+                           ". add-goal-submit";
+    }
+
+    .add-goal-title { grid-area: add-goal-title; }
+
+    .add-goal-title-value { grid-area: add-goal-title-value; }
+
+    .add-goal-rank { grid-area: add-goal-rank; }
+
+    .add-goal-rank-value { grid-area: add-goal-rank-value; }
+
+    .add-goal-deadline { grid-area: add-goal-deadline; }
+
+    .add-goal-deadline-value { grid-area: add-goal-deadline-value; }
+
+    .add-goal-submit { grid-area: add-goal-submit; }
+
+    .add-goal-subgoals { grid-area: add-goal-subgoals; }
+
+</style>
+<EditForm Model="@_addGoalModel" OnValidSubmit="HandleSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div class="add-goal-grid-container">
+        <div class="add-goal-title">
+            <p>Title: </p>
+        </div>
+        <div class="add-goal-title-value">
+            <InputText @bind-Value="_addGoalModel.Title" />
+        </div>
+        <div class="add-goal-rank">
+            <p>Select importance: </p>
+        </div>
+        <div class="add-goal-rank-value">
+            <InputSelect name="importance" @bind-Value="_addGoalModel.Rank">
+                <option value="" selected disabled hidden>Choose rank</option>
+                @foreach (var importance in Rank.All)
+                {
+                    <option value="@importance.Key">@importance.DisplayRank</option>
+                }
+            </InputSelect>
+        </div>
+        <div class="add-goal-deadline">
+            <p>Select deadline: </p>
+        </div>
+        <div class="add-goal-deadline-value">
+            <InputDate @bind-Value="_addGoalModel.Deadline"/>
+        </div>
+        <div class="add-goal-subgoals">
+        </div>
+        <div class="add-goal-submit">
+            <button style="float: right;" type="submit">Add Goal</button>
+        </div>
+    </div>
+</EditForm>
+
 @code {
     [Parameter]
     public EventCallback<Goal> GoalAddedCallback { get; set; }
 
     private ModalDialog Dialog { get; set; }
+
+    private AddGoalModel _addGoalModel = new AddGoalModel();
+
+    private void HandleSubmit()
+    {
+        Console.WriteLine(_addGoalModel.Rank);
+    }
+
 }
