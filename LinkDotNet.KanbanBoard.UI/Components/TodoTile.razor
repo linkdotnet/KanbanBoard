@@ -88,6 +88,11 @@
 
     private string GetShortDeadline()
     {
+        if (!Goal.HasDeadline)
+        {
+            return string.Empty;
+        }
+
         var isCurrentYear = Goal.Deadline.Year == DateTime.Now.Year;
         var year = isCurrentYear ? string.Empty : " yyyy";
         return Goal.Deadline.ToString($"d'.' MMM'.'{year}");
