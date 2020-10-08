@@ -4,7 +4,7 @@
 @using LinkDotNet.KanbanBoard.Web
 @using LinkDotNet.KanbanBoard.UI.Components
 @using LinkDotNet.KanbanBoard.UI.Features
-@inject GrpcChannel Channel
+@inject Kanban.KanbanClient KanbanClient
 @inherits BlazorState.BlazorStateComponent
 <style type="text/css">
     .kanban-header {
@@ -20,7 +20,7 @@
     <h2>Kanban Board</h2>
 </div>
 <div class="content">
-    @if (_status == null)
+    @if (GoalState == null)
 {
     <p><em>Loading data from Server...</em></p>
 }
@@ -35,14 +35,11 @@ else
 </div>
 @code
 {
-    private readonly GoalDto _status = new GoalDto {Title = "Test"};
-
     private GoalState GoalState => GetState<GoalState>();
 
     protected override async Task OnInitializedAsync()
     {
-        var client = new Kanban.KanbanClient(Channel);
-        var goalListDto = await client.GetAllGoalsAsync(new Empty());
+        var goalListDto = await KanbanClient.GetAllGoalsAsync(new Empty());
         await Mediator.Send(new GoalState.LoadGoalsAction(goalListDto));
     }
 }

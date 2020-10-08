@@ -73,7 +73,7 @@
         <div class="swimlane-header-add">
             @if (CanAddGoals)
             {
-                <button class="button-add-goal" @onclick="() => ModalDialog.Open()"><img src="img/Add.svg" alt="Add Goal" /></button>
+                <button class="button-add-goal" @onclick="() => AddGoalDialog.Open()"><img src="img/Add.svg" alt="Add Goal" /></button>
             }
         </div>
     </div>
@@ -85,7 +85,7 @@
         }
     </ul>
 </div>
-<ModalDialog @ref="ModalDialog" Title="Add Goal">
+<ModalDialog @ref="AddGoalDialog" Title="Add Goal">
     <AddGoalDialog GoalAddedCallback="OnGoalAddedCallback" />
 </ModalDialog>
 @code {
@@ -100,7 +100,7 @@
 
     private string _dropClass = string.Empty;
 
-    private ModalDialog ModalDialog { get; set; }
+    private ModalDialog AddGoalDialog { get; set; }
 
     protected override void OnParametersSet()
     {
@@ -137,5 +137,6 @@
     private async Task OnGoalAddedCallback(Goal goal)
     {
         await Mediator.Send(new GoalState.AddGoalAction(goal));
+        AddGoalDialog.Close();
     }
 }

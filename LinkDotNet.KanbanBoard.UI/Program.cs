@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using BlazorState;
 using Grpc.Net.Client;
 using Grpc.Net.Client.Web;
+using LinkDotNet.KanbanBoard.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -36,6 +37,12 @@ namespace LinkDotNet.KanbanBoard.UI
                 var httpHandler = new GrpcWebHandler(GrpcWebMode.GrpcWebText, new HttpClientHandler());
 
                 return GrpcChannel.ForAddress(grpcEndpointUrl, new GrpcChannelOptions {HttpHandler = httpHandler});
+            });
+
+            builder.Services.AddSingleton(sp =>
+            {
+                var service = sp.GetService<GrpcChannel>();
+                return new Kanban.KanbanClient(service);
             });
         }
 

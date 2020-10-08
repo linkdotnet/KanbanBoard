@@ -1,4 +1,6 @@
 ﻿@using LinkDotNet.KanbanBoard.Domain
+@using LinkDotNet.KanbanBoard.UI.Features
+@using System.ComponentModel.DataAnnotations
 <style type="text/css">
     .add-goal-grid-container {
         display: grid;
@@ -68,15 +70,21 @@
 
 @code {
     [Parameter]
+    [Required]
     public EventCallback<Goal> GoalAddedCallback { get; set; }
-
-    private ModalDialog Dialog { get; set; }
 
     private AddGoalModel _addGoalModel = new AddGoalModel();
 
-    private void HandleSubmit()
+    private async Task HandleSubmit()
     {
-        Console.WriteLine(_addGoalModel.Rank);
+        var rank = Rank.Create(_addGoalModel.Rank).Value;
+        var goal = new Goal(_addGoalModel.Title, _addGoalModel.Deadline, Array.Empty<Subtask>(), rank, GoalStatus.Todo);
+        await GoalAddedCallback.InvokeAsync(goal);
+        ResetModel();
     }
 
+    private void ResetModel()
+    {
+        _addGoalModel = new AddGoalModel();
+    }
 }
