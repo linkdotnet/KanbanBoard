@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using CSharpFunctionalExtensions;
 
 namespace LinkDotNet.KanbanBoard.Domain
 {
@@ -19,5 +20,9 @@ namespace LinkDotNet.KanbanBoard.Domain
         public IEnumerable<Subtask> Subtasks { get; private set; }
         public Rank Rank { get; private set; }
         public GoalStatus GoalStatus { get; set; }
+
+        public bool HasDeadline => Deadline != default;
+
+        //public static Result<Goal> Create()
     }
 }

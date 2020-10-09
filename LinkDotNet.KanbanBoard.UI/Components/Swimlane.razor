@@ -1,15 +1,17 @@
 ﻿@using LinkDotNet.KanbanBoard.Domain
+@using LinkDotNet.KanbanBoard.UI.Features
+@inherits BlazorState.BlazorStateComponent
 <style type="text/css">
     .goal-status {
         display: flex;
-        justify-content: space-between; 
+        justify-content: space-between;
         flex-direction: column;
         width: 32%;
     }
 
-    .goal-status ul {
-        flex: 1;
-    }
+        .goal-status ul {
+            flex: 1;
+        }
 
     .goal-list {
         list-style: none;
@@ -48,16 +50,16 @@
         overflow: hidden;
         outline: none;
     }
-    .button-add-goal:active {
-        transform: translateY(-1px);
-        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-        outline: none;
-    }
 
-    .button-add-goal:focus {
-        outline: 0;
-    }
+        .button-add-goal:active {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+            outline: none;
+        }
 
+        .button-add-goal:focus {
+            outline: 0;
+        }
 </style>
 <div class="goal-status"
      ondragover="event.preventDefault();"
@@ -65,17 +67,17 @@
      @ondrop="HandleDrop"
      @ondragenter="HandleDragEnter"
      @ondragleave="HandleDragLeave">
-    
+
     <div class="swimlane-header" draggable="false">
         <div class="swimlane-header-text"><span class="badge">@_goals.Count</span><em>@GoalStatus.Key</em></div>
         <div class="swimlane-header-add">
             @if (CanAddGoals)
             {
-                <button class="button-add-goal"><img src="img/Add.svg" alt="Add Goal"/></button>
+                <button class="button-add-goal" @onclick="() => AddGoalDialog.Open()"><img src="img/Add.svg" alt="Add Goal" /></button>
             }
         </div>
     </div>
-    
+
     <ul class="goal-list @_dropClass">
         @foreach (var goal in _goals)
         {
@@ -83,9 +85,12 @@
         }
     </ul>
 </div>
+<ModalDialog @ref="AddGoalDialog" Title="Add Goal">
+    <AddGoalDialog GoalAddedCallback="OnGoalAddedCallback" />
+</ModalDialog>
 @code {
     [CascadingParameter]
-    private GoalContainer GoalContainer { get; set; }
+    public GoalContainer GoalContainer { get; set; }
     [Parameter]
     public GoalStatus GoalStatus { get; set; }
     [Parameter]
@@ -94,6 +99,8 @@
     private List<Goal> _goals = new List<Goal>();
 
     private string _dropClass = string.Empty;
+
+    private ModalDialog AddGoalDialog { get; set; }
 
     protected override void OnParametersSet()
     {
@@ -125,5 +132,11 @@
     private void HandleGoalItemDragStart(Goal goal)
     {
         GoalContainer.Payload = goal;
+    }
+
+    private async Task OnGoalAddedCallback(Goal goal)
+    {
+        await Mediator.Send(new GoalState.AddGoalAction(goal));
+        AddGoalDialog.Close();
     }
 }
