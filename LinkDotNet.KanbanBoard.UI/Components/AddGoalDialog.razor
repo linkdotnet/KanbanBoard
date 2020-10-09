@@ -78,7 +78,7 @@
     private async Task HandleSubmit()
     {
         var rank = Rank.Create(_addGoalModel.Rank).Value;
-        var goal = new Goal(_addGoalModel.Title, _addGoalModel.Deadline, Array.Empty<Subtask>(), rank, GoalStatus.Todo);
+        var goal = Goal.Create(_addGoalModel.Title, rank, GoalStatus.Todo, Array.Empty<Subtask>(), _addGoalModel.Deadline).Value;
         await GoalAddedCallback.InvokeAsync(goal);
         ResetModel();
     }

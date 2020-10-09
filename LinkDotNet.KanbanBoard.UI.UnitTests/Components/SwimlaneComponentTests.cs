@@ -78,7 +78,7 @@ namespace LinkDotNet.KanbanBoard.UI.UnitTests.Components
 
         private Goal CreateGoal(GoalStatus status)
         {
-            return new Goal("Test", default, Array.Empty<Subtask>(), Rank.Important, status);
+            return new GoalBuilder().WithGoalStatus(status).Build();
         }
     }
 }

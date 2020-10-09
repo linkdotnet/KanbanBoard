@@ -14,7 +14,7 @@ namespace LinkDotNet.KanbanBoard.UI.UnitTests.Components
         public void GivenDeadlineThisYear_WhenRendering_ThenYearShouldBeOmitted()
         {
             var date = new DateTime(DateTime.Now.Year, 1, 1);
-            var goal = new Goal("Some-Title", date, Array.Empty<Subtask>(),  Rank.Important, GoalStatus.Completed);
+            var goal = new GoalBuilder().WithDeadline(date).Build();
 
             var todoTile = RenderComponent<TodoTile>(t => t.Add(s => s.Goal, goal));
             var element = todoTile.Find("#deadline-text").InnerHtml;
@@ -26,7 +26,7 @@ namespace LinkDotNet.KanbanBoard.UI.UnitTests.Components
         public void GivenDeadlineNextYear_WhenRendering_ThenYearShouldNotBeOmitted()
         {
             var date = new DateTime(2100, 1, 1);
-            var goal = new Goal("Some-Title", date, Array.Empty<Subtask>(), Rank.Important, GoalStatus.Completed);
+            var goal = new GoalBuilder().WithDeadline(date).Build();
 
             var todoTile = RenderComponent<TodoTile>(t => t.Add(s => s.Goal, goal));
             var element = todoTile.Find("#deadline-text").InnerHtml;
