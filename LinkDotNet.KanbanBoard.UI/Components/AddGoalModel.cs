@@ -9,7 +9,7 @@ namespace LinkDotNet.KanbanBoard.UI.Components
         [MinLength(1, ErrorMessage = "Please enter a valid title")]
         public string Title { get; set; }
 
-        public DateTime Deadline { get; set; }
+        public DateTime? Deadline { get; set; }
 
         [Required]
         public string Rank { get; set; }
