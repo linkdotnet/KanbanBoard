@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using BlazorState;
-using Grpc.Net.Client;
 using LinkDotNet.KanbanBoard.Domain;
 using LinkDotNet.KanbanBoard.Web;
 using MediatR;
@@ -44,7 +43,15 @@ namespace LinkDotNet.KanbanBoard.UI.Features
 
             public override Task<Unit> Handle(AddGoalAction aAction, CancellationToken aCancellationToken)
             {
-                GoalState._goals.Add(aAction.Goal);
+                var goal = aAction.Goal;
+                GoalState._goals.Add(goal);
+                _kanbanClient.AddGoalAsync(new GoalDto
+                {
+                    Title = goal.Title,
+                    Rank = goal.Rank.Key,
+                    GoalStatus = goal.GoalStatus.Key,
+                    Deadline = goal.Deadline.Ticks,
+                });
                 return Unit.Task;
             }
         }

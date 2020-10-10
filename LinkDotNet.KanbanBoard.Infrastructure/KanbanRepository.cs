@@ -9,6 +9,8 @@ namespace LinkDotNet.KanbanBoard.Infrastructure
     public interface IKanbanRepository
     {
         Task<IEnumerable<Goal>> GetAllGoalsAsync();
+
+        Task AddGoalAsync(Goal goal);
     }
 
     public class KanbanRepository : IKanbanRepository
@@ -16,6 +18,11 @@ namespace LinkDotNet.KanbanBoard.Infrastructure
         public Task<IEnumerable<Goal>> GetAllGoalsAsync()
         {
             return Task.FromResult(Array.Empty<Goal>().AsEnumerable());
+        }
+
+        public Task AddGoalAsync(Goal goal)
+        {
+            return Task.CompletedTask;
         }
     }
 }

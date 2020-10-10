@@ -20,9 +20,11 @@ message GoalDto {
 	repeated SubtaskDto Subtasks = 3;
 	string Rank = 4;
 	string GoalStatus = 5;
+	string Id = 6;
 
 }
 
 service Kanban {
 	rpc GetAllGoals(Empty) returns (GoalListDto);
+	rpc AddGoal(GoalDto) returns (Empty);
 }
