@@ -1,6 +1,7 @@
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Blazored.Toast;
 using BlazorState;
 using Grpc.Net.Client;
 using Grpc.Net.Client.Web;
@@ -21,7 +22,7 @@ namespace LinkDotNet.KanbanBoard.UI
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
             RegisterGrpcWebEndpoint(builder);
-            RegisterBlazorState(builder);
+            RegisterBlazorExtensions(builder);
 
             var host = builder.Build();
             await host.RunAsync();
@@ -46,9 +47,10 @@ namespace LinkDotNet.KanbanBoard.UI
             });
         }
 
-        private static void RegisterBlazorState(WebAssemblyHostBuilder builder)
+        private static void RegisterBlazorExtensions(WebAssemblyHostBuilder builder)
         {
             builder.Services.AddBlazorState(opt => opt.Assemblies = new[] {typeof(Program).Assembly});
+            builder.Services.AddBlazoredToast();
         }
     }
 }

@@ -4,42 +4,61 @@
 @using LinkDotNet.KanbanBoard.Web
 @using LinkDotNet.KanbanBoard.UI.Components
 @using LinkDotNet.KanbanBoard.UI.Features
+@using Grpc.Core
 @inject Kanban.KanbanClient KanbanClient
+@inject IToastService ToastService
 @inherits BlazorState.BlazorStateComponent
 <style type="text/css">
     .kanban-header {
-        width:100%;
-        top:0;
-        left:0;
+        width: 100%;
+        top: 0;
+        left: 0;
         background-color: #A7A7A7;
         color: #262626;
-      }
+    }
 </style>
-
 <div class="kanban-header">
-    <h2>Kanban Board</h2>
-</div>
+        <h2>Kanban Board</h2>
+    </div>
 <div class="content">
     @if (GoalState == null)
-{
-    <p><em>Loading data from Server...</em></p>
-}
-else
-{
-    <GoalContainer Goals="GoalState.Goals">
-        <Swimlane GoalStatus="GoalStatus.Todo" CanAddGoals="true"></Swimlane>
-        <Swimlane GoalStatus="GoalStatus.InProgress"></Swimlane>
-        <Swimlane GoalStatus="GoalStatus.Completed"></Swimlane>
-    </GoalContainer>
-}
+    {
+        <p><em>Loading data from Server...</em></p>
+    }
+    else
+    {
+        <GoalContainer Goals="GoalState.Goals">
+            <Swimlane GoalStatus="GoalStatus.Todo" CanAddGoals="true"></Swimlane>
+            <Swimlane GoalStatus="GoalStatus.InProgress"></Swimlane>
+            <Swimlane GoalStatus="GoalStatus.Completed"></Swimlane>
+        </GoalContainer>
+    }
 </div>
 @code
 {
     private GoalState GoalState => GetState<GoalState>();
+    private RpcException _errorOnLoading;
 
     protected override async Task OnInitializedAsync()
     {
-        var goalListDto = await KanbanClient.GetAllGoalsAsync(new Empty());
-        await Mediator.Send(new GoalState.LoadGoalsAction(goalListDto));
+        try
+        {
+            var goalListDto = await KanbanClient.GetAllGoalsAsync(new Empty());
+            await Mediator.Send(new GoalState.LoadGoalsAction(goalListDto));
+        }
+        catch (RpcException exc)
+        {
+            _errorOnLoading = exc;
+        }
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        base.OnAfterRender(firstRender);
+
+        if (_errorOnLoading != null)
+        {
+            ToastService.ShowError($"There was an error while communicating with the server");
+        }
     }
 }

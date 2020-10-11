@@ -19,25 +19,20 @@ namespace LinkDotNet.KanbanBoard.Web.Services
         public override async Task<GoalListDto> GetAllGoals(Empty request, ServerCallContext context)
         {
             var allGoals = await _kanbanRepository.GetAllGoalsAsync();
-            var goalsDto = allGoals.Select(goal => new GoalDto
-            {
-                Title = goal.Title,
-                GoalStatus = goal.GoalStatus.Key,
-                Deadline = goal.Deadline.Ticks,
-                Rank = goal.Rank.Key
-            });
+            var goalsDto = allGoals.Select(goal => goal.ToGoalDto());
             return new GoalListDto { GoalDto = { goalsDto } };
         }
 
-        public override async Task<Empty> AddGoal(GoalDto request, ServerCallContext context)
+        public override async Task<GoalAdded> AddGoal(GoalDto request, ServerCallContext context)
         {
-            var rankResult = Rank.Create(request.Rank);
-            var goalStatusResult = GoalStatus.Create(request.GoalStatus);
-            var goalResult = Goal.Create(request.Title, rankResult.Value, goalStatusResult.Value, Array.Empty<Subtask>(),
-                new DateTime(request.Deadline));
-            await _kanbanRepository.AddGoalAsync(goalResult.Value);
+            var goal = request.ToGoal();
+            await _kanbanRepository.AddGoalAsync(goal);
+            request.Id = goal.Id;
 
-            return new Empty();
+            return new GoalAdded
+            {
+                Goal = request
+            };
         }
     }
 }

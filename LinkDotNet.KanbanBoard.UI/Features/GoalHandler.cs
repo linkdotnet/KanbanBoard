@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using BlazorState;
 using LinkDotNet.KanbanBoard.Domain;
+using LinkDotNet.KanbanBoard.UI.Shared;
 using LinkDotNet.KanbanBoard.Web;
 using MediatR;
 
@@ -41,18 +42,12 @@ namespace LinkDotNet.KanbanBoard.UI.Features
                 _kanbanClient = kanbanClient;
             }
 
-            public override Task<Unit> Handle(AddGoalAction aAction, CancellationToken aCancellationToken)
+            public override async Task<Unit> Handle(AddGoalAction aAction, CancellationToken aCancellationToken)
             {
                 var goal = aAction.Goal;
-                GoalState._goals.Add(goal);
-                _kanbanClient.AddGoalAsync(new GoalDto
-                {
-                    Title = goal.Title,
-                    Rank = goal.Rank.Key,
-                    GoalStatus = goal.GoalStatus.Key,
-                    Deadline = goal.Deadline.Ticks,
-                });
-                return Unit.Task;
+                var newGoal = await _kanbanClient.AddGoalAsync(goal.ToGoalDto());
+                GoalState._goals.Add(newGoal.Goal.ToGoal());
+                return Unit.Value;
             }
         }
     }

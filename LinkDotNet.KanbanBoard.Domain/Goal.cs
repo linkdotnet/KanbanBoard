@@ -19,7 +19,7 @@ namespace LinkDotNet.KanbanBoard.Domain
             GoalStatus = goalStatus;
         }
 
-        public string Id { get; private set; }
+        public string Id { get; private set; } = string.Empty;
         public string Title { get; private set; }
         public DateTime Deadline { get; private set; }
         public IEnumerable<Subtask> Subtasks { get; private set; }
