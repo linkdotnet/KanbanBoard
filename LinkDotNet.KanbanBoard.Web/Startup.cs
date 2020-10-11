@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -27,6 +28,13 @@ namespace LinkDotNet.KanbanBoard.Web
             }));
 
             services.AddScoped<IKanbanRepository, KanbanRepository>();
+            services.AddSingleton(ctx =>
+            {
+                var configuration = ctx.GetRequiredService<IConfiguration>();
+                var connectionString = configuration.GetValue<string>("RavenDbUrl");
+                var database = configuration.GetValue<string>("RavenDbDatabase");
+                return RavenDbConnectionProvider.Create(connectionString, database);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

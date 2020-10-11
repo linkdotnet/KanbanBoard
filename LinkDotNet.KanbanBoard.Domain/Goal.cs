@@ -6,6 +6,10 @@ namespace LinkDotNet.KanbanBoard.Domain
 {
     public class Goal
     {
+        private Goal()
+        {
+        }
+
         private Goal(string title, DateTime deadline, IEnumerable<Subtask> subtasks, Rank rank, GoalStatus goalStatus)
         {
             Title = title;

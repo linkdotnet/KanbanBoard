@@ -1,7 +1,10 @@
 ﻿using LinkDotNet.EnumValueObject;
+using LinkDotNet.EnumValueObject.Converter.NewtonsoftJsonConverter;
+using Newtonsoft.Json;
 
 namespace LinkDotNet.KanbanBoard.Domain
 {
+    [JsonConverter(typeof(EnumValueObjectNewtonsoftJsonConverter<Rank>))]
     public class Rank : EnumValueObject<Rank>
     {
         public static readonly Rank Urgent = new Rank(nameof(Urgent), "U", "Urgent");

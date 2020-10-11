@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LinkDotNet.KanbanBoard.Domain;
+using Raven.Client.Documents;
 
 namespace LinkDotNet.KanbanBoard.Infrastructure
 {
@@ -15,14 +16,24 @@ namespace LinkDotNet.KanbanBoard.Infrastructure
 
     public class KanbanRepository : IKanbanRepository
     {
-        public Task<IEnumerable<Goal>> GetAllGoalsAsync()
+        private readonly IDocumentStore _documentStore;
+
+        public KanbanRepository(IDocumentStore documentStore)
         {
-            return Task.FromResult(Array.Empty<Goal>().AsEnumerable());
+            _documentStore = documentStore;
         }
 
-        public Task AddGoalAsync(Goal goal)
+        public async Task<IEnumerable<Goal>> GetAllGoalsAsync()
         {
-            return Task.CompletedTask;
+            using var session = _documentStore.OpenAsyncSession();
+            return await session.Query<Goal>().ToListAsync();
+        }
+
+        public async Task AddGoalAsync(Goal goal)
+        {
+            using var session = _documentStore.OpenAsyncSession();
+            await session.StoreAsync(goal);
+            await session.SaveChangesAsync();
         }
     }
 }
