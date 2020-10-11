@@ -50,5 +50,26 @@ namespace LinkDotNet.KanbanBoard.UI.Features
                 return Unit.Value;
             }
         }
+
+        public class ChangeGoalStatusHandler : ActionHandler<ChangeGoalStatusAction>
+        {
+            private readonly Kanban.KanbanClient _kanbanClient;
+
+            public ChangeGoalStatusHandler(IStore aStore, Kanban.KanbanClient kanbanClient) : base(aStore)
+            {
+                _kanbanClient = kanbanClient;
+            }
+
+            public override async Task<Unit> Handle(ChangeGoalStatusAction aAction, CancellationToken aCancellationToken)
+            {
+                await _kanbanClient.ChangeGoalStatusAsync(new GoalRankChangedDto
+                {
+                    Id = aAction.Id,
+                    GoalStatus = aAction.NewStatus.Key
+                });
+
+                return Unit.Value;
+            }
+        }
     }
 }

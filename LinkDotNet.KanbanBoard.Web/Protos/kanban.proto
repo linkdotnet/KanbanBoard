@@ -18,6 +18,11 @@ message GoalListDto {
 	repeated GoalDto GoalDto = 1;
 }
 
+message GoalRankChangedDto {
+	string Id = 1;
+	string GoalStatus = 2;
+}
+
 message GoalDto {
     string Title = 1;
     int64 Deadline = 2;
@@ -31,4 +36,5 @@ message GoalDto {
 service Kanban {
 	rpc GetAllGoals(Empty) returns (GoalListDto);
 	rpc AddGoal(GoalDto) returns (GoalAdded);
+	rpc ChangeGoalStatus(GoalRankChangedDto) returns (Empty);
 }

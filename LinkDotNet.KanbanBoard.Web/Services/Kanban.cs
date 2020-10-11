@@ -34,5 +34,15 @@ namespace LinkDotNet.KanbanBoard.Web.Services
                 Goal = request
             };
         }
+
+        public override async Task<Empty> ChangeGoalStatus(GoalRankChangedDto request, ServerCallContext context)
+        {
+            var goalId = request.Id;
+            var newGoalStatus = GoalStatus.Create(request.GoalStatus).Value;
+
+            await _kanbanRepository.UpdateGoalStatusAsync(goalId, newGoalStatus);
+
+            return new Empty();
+        }
     }
 }
