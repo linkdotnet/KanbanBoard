@@ -23,9 +23,7 @@ namespace LinkDotNet.KanbanBoard.UI.Features
             public override Task<Unit> Handle(LoadGoalsAction aAction, CancellationToken aCancellationToken)
             {
                 var dto = aAction.GoalListDto;
-                var goals = dto.GoalDto.Select(goalDto => Goal.Create(goalDto.Title, Rank.Create(goalDto.Rank).Value,
-                    GoalStatus.Create(goalDto.GoalStatus).Value, Array.Empty<Subtask>(),
-                    new DateTime(goalDto.Deadline)).Value);
+                var goals = dto.GoalDto.Select(goalDto => goalDto.ToGoal());
                 GoalState._goals.AddRange(goals);
 
                 return Unit.Task;
@@ -53,15 +51,18 @@ namespace LinkDotNet.KanbanBoard.UI.Features
 
         public class ChangeGoalStatusHandler : ActionHandler<ChangeGoalStatusAction>
         {
+            private readonly IStore _aStore;
             private readonly Kanban.KanbanClient _kanbanClient;
 
             public ChangeGoalStatusHandler(IStore aStore, Kanban.KanbanClient kanbanClient) : base(aStore)
             {
+                _aStore = aStore;
                 _kanbanClient = kanbanClient;
             }
 
             public override async Task<Unit> Handle(ChangeGoalStatusAction aAction, CancellationToken aCancellationToken)
             {
+                _aStore.GetState<GoalState>()._goals.Single(g => g.Id == aAction.Id).GoalStatus = aAction.NewStatus;
                 await _kanbanClient.ChangeGoalStatusAsync(new GoalRankChangedDto
                 {
                     Id = aAction.Id,

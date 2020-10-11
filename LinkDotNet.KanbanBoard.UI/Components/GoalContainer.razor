@@ -1,5 +1,7 @@
 ﻿@using System.ComponentModel.DataAnnotations
 @using LinkDotNet.KanbanBoard.Domain
+@using LinkDotNet.KanbanBoard.UI.Features
+@inherits BlazorState.BlazorStateComponent
 <style type="text/css">
     .goal-container {
         display: flex;
@@ -22,12 +24,8 @@
 
     public Goal Payload { get; set; }
 
-    public void UpdateGoalStatus(GoalStatus newStatus)
+    public async Task UpdateGoalStatusAsync(GoalStatus newStatus)
     {
-        Payload.GoalStatus = newStatus;
-
-        // We have to tell Blazor that the State has changed
-        // As we do not directly change the 
-        StateHasChanged();
+        await Mediator.Send(new GoalState.ChangeGoalStatusAction(Payload.Id, newStatus));
     }
 }

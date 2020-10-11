@@ -24,7 +24,9 @@ namespace LinkDotNet.KanbanBoard.UI.Shared
             var status = GoalStatus.Create(goalDto.GoalStatus).Value;
             var deadline = new DateTime(goalDto.Deadline);
 
-            return Goal.Create(goalDto.Title, rank, status, null, deadline).Value;
+            var value = Goal.Create(goalDto.Title, rank, status, null, deadline).Value;
+            value.Id = goalDto.Id;
+            return value;
         }
     }
 }

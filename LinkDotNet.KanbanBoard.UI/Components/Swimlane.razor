@@ -123,10 +123,10 @@
         _dropClass = string.Empty;
     }
 
-    private void HandleDrop()
+    private async Task HandleDrop()
     {
         _dropClass = string.Empty;
-        GoalContainer.UpdateGoalStatus(GoalStatus);
+        await GoalContainer.UpdateGoalStatusAsync(GoalStatus);
     }
 
     private void HandleGoalItemDragStart(Goal goal)
