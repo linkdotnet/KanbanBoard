@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using CSharpFunctionalExtensions;
+using Newtonsoft.Json;
 
 namespace LinkDotNet.KanbanBoard.Domain
 {
     public class Goal
     {
-        private Goal()
-        {
-        }
-
+        [JsonConstructor]
         private Goal(string title, DateTime deadline, IEnumerable<Subtask> subtasks, Rank rank, GoalStatus goalStatus)
         {
             Title = title;
