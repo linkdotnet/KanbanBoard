@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Blazor-State" Version="3.2.4" />
+    <PackageReference Include="Blazor-State" Version="3.3.0" />
     <PackageReference Include="Blazored.Toast" Version="3.1.2" />
     <PackageReference Include="Google.Protobuf" Version="3.13.0" />
     <PackageReference Include="Grpc.Net.Client" Version="2.32.0" />

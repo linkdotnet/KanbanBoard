@@ -8,12 +8,6 @@ namespace LinkDotNet.KanbanBoard.UI.Features
     {
         public class LoadGoalsAction : IAction
         {
-            public LoadGoalsAction(GoalListDto goalListDto)
-            {
-                GoalListDto = goalListDto;
-            }
-
-            public GoalListDto GoalListDto { get; }
         }
 
         public class AddGoalAction : IAction

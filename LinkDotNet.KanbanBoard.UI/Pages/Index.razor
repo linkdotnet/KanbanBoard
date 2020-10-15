@@ -6,7 +6,6 @@
 @using LinkDotNet.KanbanBoard.UI.Features
 @using Grpc.Core
 @inject Kanban.KanbanClient KanbanClient
-@inject IToastService ToastService
 @inherits BlazorState.BlazorStateComponent
 <style type="text/css">
     .kanban-header {
@@ -37,28 +36,9 @@
 @code
 {
     private GoalState GoalState => GetState<GoalState>();
-    private RpcException _errorOnLoading;
 
     protected override async Task OnInitializedAsync()
     {
-        try
-        {
-            var goalListDto = await KanbanClient.GetAllGoalsAsync(new Empty());
-            await Mediator.Send(new GoalState.LoadGoalsAction(goalListDto));
-        }
-        catch (RpcException exc)
-        {
-            _errorOnLoading = exc;
-        }
-    }
-
-    protected override void OnAfterRender(bool firstRender)
-    {
-        base.OnAfterRender(firstRender);
-
-        if (_errorOnLoading != null)
-        {
-            ToastService.ShowError($"There was an error while communicating with the server");
-        }
+        await Mediator.Send(new GoalState.LoadGoalsAction());
     }
 }
