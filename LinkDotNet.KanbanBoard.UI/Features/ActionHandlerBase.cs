@@ -3,7 +3,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Blazored.Toast.Services;
 using BlazorState;
+using Grpc.Core;
 using MediatR;
+using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Rendering;
 
 namespace LinkDotNet.KanbanBoard.UI.Features
 {
@@ -23,9 +26,21 @@ namespace LinkDotNet.KanbanBoard.UI.Features
             {
                 return await InnerHandleAsync(aAction, aCancellationToken);
             }
-            catch (Exception e)
+            catch (RpcException rpcException)
             {
-                _toastService.ShowError($"There was an error: {e}");
+                _toastService.ShowError((RenderFragment) CreateErrorMessage, "Server-Error");
+                throw;
+
+                void CreateErrorMessage(RenderTreeBuilder builder)
+                {
+                    builder.AddMarkupContent(0, "There was an error while communicating with the server<br/>");
+                    builder.AddMarkupContent(1, $"Status-Code: {rpcException.Status}");
+                }
+            }
+
+            catch (Exception exc)
+            {
+                _toastService.ShowError($"Unknown Error: {exc.Message}");
                 throw;
             }
         }
