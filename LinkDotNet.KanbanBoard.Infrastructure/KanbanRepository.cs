@@ -11,6 +11,7 @@ namespace LinkDotNet.KanbanBoard.Infrastructure
         Task<IEnumerable<Goal>> GetAllGoalsAsync();
 
         Task AddGoalAsync(Goal goal);
+
         Task UpdateGoalStatusAsync(string id, GoalStatus newStatus);
     }
 

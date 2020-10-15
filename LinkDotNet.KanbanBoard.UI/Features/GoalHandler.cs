@@ -48,7 +48,7 @@ namespace LinkDotNet.KanbanBoard.UI.Features
                 GoalState._goals.Add(newGoal.Goal.ToGoal());
                 return Unit.Value;
             }
-            }
+        }
 
         public class ChangeGoalStatusHandler : ActionHandlerBase<ChangeGoalStatusAction>
         {

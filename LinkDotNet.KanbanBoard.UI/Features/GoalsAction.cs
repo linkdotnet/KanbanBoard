@@ -1,6 +1,5 @@
 ﻿using BlazorState;
 using LinkDotNet.KanbanBoard.Domain;
-using LinkDotNet.KanbanBoard.Web;
 
 namespace LinkDotNet.KanbanBoard.UI.Features
 {
