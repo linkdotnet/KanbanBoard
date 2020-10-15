@@ -8,14 +8,20 @@ namespace LinkDotNet.KanbanBoard.UI.Shared
     {
         public static GoalDto ToGoalDto(this Goal goal)
         {
-            return new GoalDto
+            var goalDto = new GoalDto
             {
-                Id = goal.Id,
                 Title = goal.Title,
                 Rank = goal.Rank.Key,
                 GoalStatus = goal.GoalStatus.Key,
                 Deadline = goal.Deadline.Ticks,
             };
+
+            if (goal.Id != null)
+            {
+                goalDto.Id = goal.Id;
+            }
+
+            return goalDto;
         }
 
         public static Goal ToGoal(this GoalDto goalDto)
