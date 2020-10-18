@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using LinkDotNet.KanbanBoard.Domain;
 using Raven.Client.Documents;
+using Raven.Client.Documents.Linq;
 
 namespace LinkDotNet.KanbanBoard.Infrastructure
 {
     public interface IKanbanRepository
     {
-        Task<IEnumerable<Goal>> GetAllGoalsAsync();
+        Task<IEnumerable<Goal>> GetAllGoalsAsync(bool retrieveDeleted);
 
         Task AddGoalAsync(Goal goal);
 
@@ -24,10 +24,15 @@ namespace LinkDotNet.KanbanBoard.Infrastructure
             _documentStore = documentStore;
         }
 
-        public async Task<IEnumerable<Goal>> GetAllGoalsAsync()
+        public async Task<IEnumerable<Goal>> GetAllGoalsAsync(bool retrieveDeleted)
         {
             using var session = _documentStore.OpenAsyncSession();
-            return await session.Query<Goal>().ToListAsync();
+            if (retrieveDeleted)
+            {
+                return await session.Query<Goal>().ToListAsync();
+            }
+
+            return await session.Query<Goal>().Where(g => g.IsDeleted == false).ToListAsync();
         }
 
         public async Task AddGoalAsync(Goal goal)
