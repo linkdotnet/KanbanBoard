@@ -105,7 +105,7 @@
     protected override void OnParametersSet()
     {
         _goals.Clear();
-        _goals.AddRange(GoalContainer.Goals.Where(x => x.GoalStatus == GoalStatus));
+        _goals.AddRange(GoalContainer.Goals.Where(x => x.GoalStatus == GoalStatus && !x.IsDeleted));
     }
 
     private void HandleDragEnter()
