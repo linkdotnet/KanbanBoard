@@ -12,7 +12,7 @@ namespace LinkDotNet.KanbanBoard.Infrastructure
 
         Task AddGoalAsync(Goal goal);
 
-        Task UpdateGoalStatusAsync(string id, GoalStatus newStatus);
+        Task UpdateGoalAsync(Goal goal);
     }
 
     public class KanbanRepository : IKanbanRepository
@@ -37,11 +37,10 @@ namespace LinkDotNet.KanbanBoard.Infrastructure
             await session.SaveChangesAsync();
         }
 
-        public async Task UpdateGoalStatusAsync(string id, GoalStatus newStatus)
+        public async Task UpdateGoalAsync(Goal goal)
         {
             using var session = _documentStore.OpenAsyncSession();
-            var goal = await session.LoadAsync<Goal>(id);
-            goal.GoalStatus = newStatus;
+            await session.StoreAsync(goal);
             await session.SaveChangesAsync();
         }
     }

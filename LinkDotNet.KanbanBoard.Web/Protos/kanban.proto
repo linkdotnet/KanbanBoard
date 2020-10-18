@@ -30,11 +30,11 @@ message GoalDto {
 	string Rank = 4;
 	string GoalStatus = 5;
 	string Id = 6;
-
+	bool IsDeleted = 7;
 }
 
 service Kanban {
 	rpc GetAllGoals(Empty) returns (GoalListDto);
 	rpc AddGoal(GoalDto) returns (GoalAdded);
-	rpc ChangeGoalStatus(GoalRankChangedDto) returns (Empty);
+	rpc UpdateGoal(GoalDto) returns (Empty);
 }
