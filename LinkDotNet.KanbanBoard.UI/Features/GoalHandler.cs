@@ -63,12 +63,9 @@ namespace LinkDotNet.KanbanBoard.UI.Features
 
             protected override async Task<Unit> InnerHandleAsync(ChangeGoalStatusAction aAction, CancellationToken aCancellationToken)
             {
-                _aStore.GetState<GoalState>()._goals.Single(g => g.Id == aAction.Id).GoalStatus = aAction.NewStatus;
-                await _kanbanClient.ChangeGoalStatusAsync(new GoalRankChangedDto
-                {
-                    Id = aAction.Id,
-                    GoalStatus = aAction.NewStatus.Key
-                });
+                var goal = _aStore.GetState<GoalState>()._goals.Single(g => g.Id == aAction.Id);
+                goal.GoalStatus = aAction.NewStatus;
+                await _kanbanClient.UpdateGoalAsync(goal.ToGoalDto());
 
                 return Unit.Value;
             }
