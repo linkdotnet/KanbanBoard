@@ -23,8 +23,8 @@ namespace LinkDotNet.KanbanBoard.Domain
         public IEnumerable<Subtask> Subtasks { get; private set; }
         public Rank Rank { get; private set; }
         public GoalStatus GoalStatus { get; set; }
-
         public bool HasDeadline => Deadline != default;
+        public bool IsDeleted { get; set; }
 
         public static Result<Goal> Create(string title, Rank rank, GoalStatus goalStatus, IEnumerable<Subtask> subtasks,
             DateTime? deadline)

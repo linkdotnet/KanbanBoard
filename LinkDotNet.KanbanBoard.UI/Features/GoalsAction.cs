@@ -21,14 +21,25 @@ namespace LinkDotNet.KanbanBoard.UI.Features
 
         public class ChangeGoalStatusAction : IAction
         {
-            public string Id { get; }
-            public GoalStatus NewStatus { get; }
-
             public ChangeGoalStatusAction(string id, GoalStatus newStatus)
             {
                 Id = id;
                 NewStatus = newStatus;
             }
+
+            public string Id { get; }
+
+            public GoalStatus NewStatus { get; }
+        }
+
+        public class DeleteGoalAction : IAction
+        {
+            public DeleteGoalAction(string id)
+            {
+                Id = id;
+            }
+
+            public string Id { get; }
         }
     }
 }

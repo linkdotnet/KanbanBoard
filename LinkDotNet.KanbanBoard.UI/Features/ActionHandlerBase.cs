@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Blazored.Toast.Services;
 using BlazorState;
 using Grpc.Core;
+using LinkDotNet.KanbanBoard.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Rendering;
@@ -15,10 +16,12 @@ namespace LinkDotNet.KanbanBoard.UI.Features
     {
         private readonly IToastService _toastService;
 
-        protected ActionHandlerBase(IStore aStore, IToastService toastService) : base(aStore)
+        protected ActionHandlerBase(IStore store, IToastService toastService) : base(store)
         {
+            Store = store;
             _toastService = toastService;
         }
+        protected GoalState GoalState => Store.GetState<GoalState>();
 
         public override async Task<Unit> Handle(TAction aAction, CancellationToken aCancellationToken)
         {
