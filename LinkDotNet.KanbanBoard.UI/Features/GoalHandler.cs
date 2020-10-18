@@ -6,7 +6,6 @@ using BlazorState;
 using LinkDotNet.KanbanBoard.UI.Shared;
 using LinkDotNet.KanbanBoard.Web;
 using MediatR;
-using TypeSupport.Extensions;
 
 namespace LinkDotNet.KanbanBoard.UI.Features
 {
