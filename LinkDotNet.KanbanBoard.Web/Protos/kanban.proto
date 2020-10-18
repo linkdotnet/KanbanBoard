@@ -5,6 +5,10 @@ option csharp_namespace = "LinkDotNet.KanbanBoard.Web";
 message Empty {
 }
 
+message GetAllGoalsDto {
+	bool GetDeleted = 1;
+}
+
 message GoalAdded {
 	GoalDto Goal = 1;
 }
@@ -34,7 +38,7 @@ message GoalDto {
 }
 
 service Kanban {
-	rpc GetAllGoals(Empty) returns (GoalListDto);
+	rpc GetAllGoals(GetAllGoalsDto) returns (GoalListDto);
 	rpc AddGoal(GoalDto) returns (GoalAdded);
 	rpc UpdateGoal(GoalDto) returns (Empty);
 }

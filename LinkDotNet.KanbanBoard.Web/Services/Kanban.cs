@@ -16,9 +16,9 @@ namespace LinkDotNet.KanbanBoard.Web.Services
             _kanbanRepository = kanbanRepository;
         }
 
-        public override async Task<GoalListDto> GetAllGoals(Empty request, ServerCallContext context)
+        public override async Task<GoalListDto> GetAllGoals(GetAllGoalsDto request, ServerCallContext context)
         {
-            var allGoals = await _kanbanRepository.GetAllGoalsAsync();
+            var allGoals = await _kanbanRepository.GetAllGoalsAsync(request.GetDeleted);
             var goalsDto = allGoals.Select(goal => goal.ToGoalDto());
             return new GoalListDto { GoalDto = { goalsDto } };
         }
