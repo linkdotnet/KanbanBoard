@@ -22,7 +22,7 @@ namespace LinkDotNet.KanbanBoard.UI.Features
 
             protected override async Task<Unit> InnerHandleAsync(LoadGoalsAction aAction, CancellationToken aCancellationToken)
             {
-                var goalListDto = await _kanbanClient.GetAllGoalsAsync(new Empty());
+                var goalListDto = await _kanbanClient.GetAllGoalsAsync(new GetAllGoalsDto { GetDeleted = false });
                 var goals = goalListDto.GoalDto.Select(goalDto => goalDto.ToGoal());
                 GoalState._goals.AddRange(goals);
 
