@@ -14,6 +14,7 @@ namespace LinkDotNet.KanbanBoard.Web.Services
                 Rank = goal.Rank.Key,
                 GoalStatus = goal.GoalStatus.Key,
                 Deadline = goal.Deadline.Ticks,
+                IsDeleted = goal.IsDeleted,
             };
         }
 
@@ -23,7 +24,10 @@ namespace LinkDotNet.KanbanBoard.Web.Services
             var status = GoalStatus.Create(goalDto.GoalStatus).Value;
             var deadline = new DateTime(goalDto.Deadline);
 
-            return Goal.Create(goalDto.Title, rank, status, null, deadline).Value;
+            var goal = Goal.Create(goalDto.Title, rank, status, null, deadline).Value;
+            goal.Id = goalDto.Id;
+            goal.IsDeleted = goalDto.IsDeleted;
+            return goal;
         }
     }
 }

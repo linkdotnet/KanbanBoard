@@ -1,5 +1,7 @@
 ﻿@using Domain
 @using System.ComponentModel.DataAnnotations
+@using LinkDotNet.KanbanBoard.UI.Features
+@inherits BlazorState.BlazorStateComponent
 <style type="text/css">
     .tile {
         border-radius: 5px;
@@ -58,25 +60,37 @@
         border-radius: 7px;
     }
 
+    .transparent-button {
+        background-color: Transparent;
+        background-repeat:no-repeat;
+        border: none;
+        cursor:pointer;
+        overflow: hidden;
+        outline:none;
+    }
+
     .rank { grid-area: rank; }
     .subgoalcount { grid-area: subgoalcount; }
     .deadline { grid-area: deadline; }
 </style>
-<div class="tile">
-    <div class="todo-box-content">
-        <div class="title">
-            <span class="title-content">@Goal.Title</span>
-        </div>
+<div class="tile-header">
+    <button class="transparent-button" @onclick="DeleteGoalAsync"><p>🗙</p></button>
+    <div class="tile">
+        <div class="todo-box-content">
+            <div class="title">
+                <span class="title-content">@Goal.Title</span>
+            </div>
 
-        <div class="right-box">
-            <div class="rank box">
-                <p>@Goal.Rank.ShortRank</p>
-            </div>
-            <div class="subgoalcount box">
-                <p>@Goal.Subtasks.Count()</p>
-            </div>
-            <div class="deadline box">
-                <p id="deadline-text">@GetShortDeadline()</p>
+            <div class="right-box">
+                <div class="rank box">
+                    <p>@Goal.Rank.ShortRank</p>
+                </div>
+                <div class="subgoalcount box">
+                    <p>@Goal.Subtasks.Count()</p>
+                </div>
+                <div class="deadline box">
+                    <p id="deadline-text">@GetShortDeadline()</p>
+                </div>
             </div>
         </div>
     </div>
@@ -96,6 +110,11 @@
         var isCurrentYear = Goal.Deadline.Year == DateTime.Now.Year;
         var year = isCurrentYear ? string.Empty : " yyyy";
         return Goal.Deadline.ToString($"d'.' MMM'.'{year}");
+    }
+
+    private async Task DeleteGoalAsync()
+    {
+        await Mediator.Send(new GoalState.DeleteGoalAction(Goal.Id));
     }
 }
     
