@@ -1,7 +1,6 @@
 ﻿using System;
+using BlazorState;
 using Bunit;
-using Bunit.Rendering;
-using LinkDotNet.KanbanBoard.Domain;
 using LinkDotNet.KanbanBoard.UI.Components;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -10,6 +9,15 @@ namespace LinkDotNet.KanbanBoard.UI.UnitTests.Components
     [TestClass]
     public class TodoTileComponentTests : ComponentTestBase
     {
+        [TestInitialize]
+        public void TestSetup()
+        {
+            Services.AddBlazorState(a => a.Assemblies = new[]
+            {
+                typeof(TodoTile).Assembly
+            });
+        }
+
         [TestMethod]
         public void GivenDeadlineThisYear_WhenRendering_ThenYearShouldBeOmitted()
         {
