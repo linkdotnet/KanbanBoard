@@ -14,6 +14,7 @@ namespace LinkDotNet.KanbanBoard.UI.Shared
                 Rank = goal.Rank.Key,
                 GoalStatus = goal.GoalStatus.Key,
                 Deadline = goal.Deadline.Ticks,
+                IsDeleted = goal.IsDeleted
             };
 
             if (goal.Id != null)
@@ -32,6 +33,7 @@ namespace LinkDotNet.KanbanBoard.UI.Shared
 
             var value = Goal.Create(goalDto.Title, rank, status, null, deadline).Value;
             value.Id = goalDto.Id;
+            value.IsDeleted = goalDto.IsDeleted;
             return value;
         }
     }
