@@ -9,6 +9,14 @@ Furthermore you need a running RavenDb-Instance. There should be a database alre
 
 # Current Features
 The following features are fully working:
+ * Adding Goals via dialog
  * Displaying Goals, which were created before
  * Moving Goals in between lanes
  * Deleting Goals
+
+ The following technologies are working:
+  * RavenDB as Database
+  * ASP.NET Core Backend with gRPC Endpoints
+  * Blazor WASM with gRPC Client (gRPC Web)
+  * Blazor State-Handling
+  * Some Component Unit tests for Blazor
