@@ -44,7 +44,7 @@
         display: grid;
         grid-template-columns: 1fr;
         grid-template-rows: repeat(3, minmax(0,1fr));
-        gap: 10% 0;
+        gap: 10px 0;
         grid-template-areas:
                            "rank"
                            "subgoalcount"
@@ -72,10 +72,19 @@
     .rank { grid-area: rank; }
     .subgoalcount { grid-area: subgoalcount; }
     .deadline { grid-area: deadline; }
+
+    .tile-header {
+        height: 32px;
+        float: right;
+    }
 </style>
-<div class="tile-header">
-    <button class="transparent-button" @onclick="DeleteGoalAsync"><p>🗙</p></button>
-    <div class="tile">
+<div class="tile">
+    <div class="tile-header">
+        <button class="transparent-button" @onclick="DeleteGoalAsync">
+            🗙
+        </button>
+    </div>
+    <div class="tile-content">
         <div class="todo-box-content">
             <div class="title">
                 <span class="title-content">@Goal.Title</span>
