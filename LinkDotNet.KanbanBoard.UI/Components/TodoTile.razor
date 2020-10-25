@@ -97,7 +97,7 @@
                 <div class="subgoalcount box">
                     <p>@Goal.Subtasks.Count()</p>
                 </div>
-                <div class="deadline box">
+                <div class="deadline box @OverDueClass">
                     <p id="deadline-text">@GetShortDeadline()</p>
                 </div>
             </div>
@@ -108,6 +108,8 @@
     [Required]
     [Parameter]
     public Goal Goal { get; set; }
+
+    private string OverDueClass => Goal.IsOverdue ? "overdue" : string.Empty;
 
     private string GetShortDeadline()
     {

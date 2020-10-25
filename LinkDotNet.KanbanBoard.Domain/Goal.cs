@@ -18,13 +18,24 @@ namespace LinkDotNet.KanbanBoard.Domain
         }
 
         public string Id { get; set; }
+
         public string Title { get; private set; }
+
         public DateTime Deadline { get; private set; }
+
         public IEnumerable<Subtask> Subtasks { get; private set; }
+
         public Rank Rank { get; private set; }
+
         public GoalStatus GoalStatus { get; set; }
+
+        [JsonIgnore]
         public bool HasDeadline => Deadline != default;
+
         public bool IsDeleted { get; set; }
+
+        [JsonIgnore]
+        public bool IsOverdue => HasDeadline && Deadline < DateTime.Now;
 
         public static Result<Goal> Create(string title, Rank rank, GoalStatus goalStatus, IEnumerable<Subtask> subtasks,
             DateTime? deadline)
