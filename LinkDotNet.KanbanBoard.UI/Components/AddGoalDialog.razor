@@ -25,7 +25,7 @@
     .add-goal-deadline-value { grid-area: add-goal-deadline-value; }
 
     .add-goal-submit { float: right;
-        flex: 0 0 100%;
+        flex: 1;
     }
 
     .subtasks {
@@ -37,7 +37,7 @@
     .subtask-input { box-sizing:content-box; }
 
     .add-goal-subtasks {
-        flex: 0 0 100%;
+        flex: 1;
     }
 </style>
 <EditForm Model="@_addGoalModel" OnValidSubmit="HandleSubmitAsync">
@@ -68,25 +68,25 @@
         <div class="add-goal-deadline-value">
             <InputDate @bind-Value="_addGoalModel.Deadline"/>
         </div>
-        <div class="subtasks">
-            <div class="add-goal-subtasks">
-                <table>
-                    @foreach (var subtask in _addGoalModel.Subtasks)
-                    {
-                        <tr>
-                            <td><InputText @bind-Value="subtask.Title" class="subtask-input"/></td>
-                            <td><button @onclick="() => DeleteSubtask(subtask)">🗙</button></td>
-                        </tr>
-                    }
+    </div>
+    <div class="subtasks">
+        <div class="add-goal-subtasks">
+            <table>
+                @foreach (var subtask in _addGoalModel.Subtasks)
+                {
                     <tr>
-                        <td><input @bind="_newSubtask" /></td>
-                        <td><button @onclick="() => AddSubtask(_newSubtask)">+</button></td>
+                        <td><InputText @bind-Value="subtask.Title" class="subtask-input"/></td>
+                        <td><button @onclick="() => DeleteSubtask(subtask)">🗙</button></td>
                     </tr>
-                </table>
-            </div>
-            <div class="add-goal-submit">
-                <button style="float: right;" type="submit">Add Goal</button>
-            </div>
+                }
+                <tr>
+                    <td><input @bind="_newSubtask" /></td>
+                    <td><button @onclick="() => AddSubtask(_newSubtask)">+</button></td>
+                </tr>
+            </table>
+        </div>
+        <div class="add-goal-submit">
+            <button style="float: right;" type="submit">Add Goal</button>
         </div>
     </div>
 </EditForm>
