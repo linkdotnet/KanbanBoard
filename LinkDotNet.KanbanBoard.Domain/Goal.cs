@@ -55,7 +55,6 @@ namespace LinkDotNet.KanbanBoard.Domain
                 return Result.Failure<Goal>($"{nameof(goalStatus)} can not be null");
             }
 
-
             return new Goal(title, deadline ?? default, subtasks ?? Array.Empty<Subtask>(), rank, goalStatus);
         }
     }
