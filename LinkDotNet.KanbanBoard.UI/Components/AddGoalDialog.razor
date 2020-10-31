@@ -11,7 +11,7 @@
                            "add-goal-title add-goal-title-value"
                            "add-goal-rank add-goal-rank-value"
                            "add-goal-deadline add-goal-deadline-value"
-                           "add-goal-subgoals add-goal-subgoals"
+                           "add-goal-subtasks add-goal-subtasks"
                            ". add-goal-submit";
     }
 
@@ -29,10 +29,10 @@
 
     .add-goal-submit { grid-area: add-goal-submit; }
 
-    .add-goal-subgoals { grid-area: add-goal-subgoals; }
+    .add-goal-subtasks { grid-area: add-goal-subtasks; }
 
 </style>
-<EditForm Model="@_addGoalModel" OnValidSubmit="HandleSubmit">
+<EditForm Model="@_addGoalModel" OnValidSubmit="HandleSubmitAsync">
     <DataAnnotationsValidator />
     <ValidationSummary />
     <div class="add-goal-grid-container">
@@ -60,7 +60,20 @@
         <div class="add-goal-deadline-value">
             <InputDate @bind-Value="_addGoalModel.Deadline"/>
         </div>
-        <div class="add-goal-subgoals">
+        <div class="add-goal-subtasks">
+            <table>
+                @foreach (var subtask in _addGoalModel.Subtasks)
+                {
+                    <tr>
+                        <td><InputText @bind-Value="subtask.Title"/></td>
+                        <td><button @onclick="() => DeleteSubtask(subtask)">🗙</button></td>
+                    </tr>
+                }
+                <tr>
+                    <td><input @bind="_newSubtask" /></td>
+                    <td><button @onclick="() => AddSubtask(_newSubtask)">+</button></td>
+                </tr>
+            </table>
         </div>
         <div class="add-goal-submit">
             <button style="float: right;" type="submit">Add Goal</button>
@@ -74,8 +87,9 @@
     public EventCallback<Goal> GoalAddedCallback { get; set; }
 
     private AddGoalModel _addGoalModel = new AddGoalModel();
+    private string _newSubtask = string.Empty;
 
-    private async Task HandleSubmit()
+    private async Task HandleSubmitAsync()
     {
         var rank = Rank.Create(_addGoalModel.Rank).Value;
         var goal = Goal.Create(_addGoalModel.Title, rank, GoalStatus.Todo, Array.Empty<Subtask>(), _addGoalModel.Deadline).Value;
@@ -86,5 +100,17 @@
     private void ResetModel()
     {
         _addGoalModel = new AddGoalModel();
+    }
+
+    private void DeleteSubtask(SubtaskModel subtaskModel)
+    {
+        _addGoalModel.Subtasks.Remove(subtaskModel);
+    }
+
+    private void AddSubtask(string subtask)
+    {
+        var subtaskModel = new SubtaskModel {Title = subtask};
+        _addGoalModel.Subtasks.Add(subtaskModel);
+        _newSubtask = string.Empty;
     }
 }
