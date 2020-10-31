@@ -1,8 +1,6 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Grpc.Core;
-using LinkDotNet.KanbanBoard.Domain;
 using LinkDotNet.KanbanBoard.Infrastructure;
 
 namespace LinkDotNet.KanbanBoard.Web.Services
