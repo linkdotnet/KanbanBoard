@@ -76,12 +76,12 @@
                 {
                     <tr>
                         <td><InputText @bind-Value="subtask.Title" class="subtask-input"/></td>
-                        <td><button @onclick="() => DeleteSubtask(subtask)">🗙</button></td>
+                        <td><button type="button" @onclick="() => DeleteSubtask(subtask)">🗙</button></td>
                     </tr>
                 }
                 <tr>
                     <td><input @bind="_newSubtask" /></td>
-                    <td><button @onclick="() => AddSubtask(_newSubtask)">+</button></td>
+                    <td><button type="button"  @onclick="() => AddSubtask(_newSubtask)">+</button></td>
                 </tr>
             </table>
         </div>
