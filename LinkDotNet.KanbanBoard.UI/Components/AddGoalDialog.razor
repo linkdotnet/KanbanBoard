@@ -102,7 +102,7 @@
     private async Task HandleSubmitAsync()
     {
         var rank = Rank.Create(_addGoalModel.Rank).Value;
-        var subtasks = _addGoalModel.Subtasks.Select(s => Subtask.Create(s.Title).Value);
+        var subtasks = CreateSubtasksFromModel();
         var goal = Goal.Create(_addGoalModel.Title, rank, GoalStatus.Todo, subtasks, _addGoalModel.Deadline).Value;
         await GoalAddedCallback.InvokeAsync(goal);
         ResetModel();
@@ -123,5 +123,11 @@
         var subtaskModel = new SubtaskModel {Title = subtask};
         _addGoalModel.Subtasks.Add(subtaskModel);
         _newSubtask = string.Empty;
+    }
+
+    private IEnumerable<Subtask> CreateSubtasksFromModel()
+    {
+        var nonEmptySubtasks = _addGoalModel.Subtasks.Where(s => !string.IsNullOrEmpty(s.Title));
+        return nonEmptySubtasks.Select(s => Subtask.Create(s.Title).Value);
     }
 }
