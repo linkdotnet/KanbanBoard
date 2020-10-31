@@ -1,32 +1,24 @@
 ﻿@page "/"
-@using Grpc.Net.Client
 @using LinkDotNet.KanbanBoard.Domain
 @using LinkDotNet.KanbanBoard.Web
 @using LinkDotNet.KanbanBoard.UI.Components
 @using LinkDotNet.KanbanBoard.UI.Features
-@using Grpc.Core
 @inject Kanban.KanbanClient KanbanClient
 @inherits BlazorState.BlazorStateComponent
 <div class="content">
-    @if (GoalState == null)
-    {
-        <p><em>Loading data from Server...</em></p>
-    }
-    else
-    {
-        <GoalContainer Goals="GoalState.Goals">
-            <Swimlane GoalStatus="GoalStatus.Todo" CanAddGoals="true"></Swimlane>
-            <Swimlane GoalStatus="GoalStatus.InProgress"></Swimlane>
-            <Swimlane GoalStatus="GoalStatus.Completed"></Swimlane>
-        </GoalContainer>
-    }
+    <GoalContainer Goals="GoalState.Goals">
+        <Swimlane GoalStatus="GoalStatus.Todo" CanAddGoals="true"></Swimlane>
+        <Swimlane GoalStatus="GoalStatus.InProgress"></Swimlane>
+        <Swimlane GoalStatus="GoalStatus.Completed"></Swimlane>
+    </GoalContainer>
 </div>
 @code
 {
     private GoalState GoalState => GetState<GoalState>();
 
-    protected override async Task OnInitializedAsync()
+    protected override Task OnInitializedAsync()
     {
-        await Mediator.Send(new GoalState.LoadGoalsAction());
+        //// TODO: Find a better way to check if the state is initialized or not
+        return !GoalState.Goals.Any() ? Mediator.Send(new GoalState.LoadGoalsAction()) : Task.CompletedTask;
     }
 }
