@@ -25,7 +25,7 @@ namespace LinkDotNet.KanbanBoard.Web.Services
             var deadline = new DateTime(goalDto.Deadline);
 
             var goal = Goal.Create(goalDto.Title, rank, status, null, deadline).Value;
-            goal.Id = goalDto.Id;
+            goal.Id = string.IsNullOrEmpty(goalDto.Id) ? null : goalDto.Id;
             goal.IsDeleted = goalDto.IsDeleted;
             return goal;
         }
