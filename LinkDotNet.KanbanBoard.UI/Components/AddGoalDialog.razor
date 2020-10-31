@@ -1,18 +1,15 @@
 ﻿@using LinkDotNet.KanbanBoard.Domain
-@using LinkDotNet.KanbanBoard.UI.Features
 @using System.ComponentModel.DataAnnotations
 <style type="text/css">
     .add-goal-grid-container {
         display: grid;
         grid-template-columns: 1fr 1.5fr;
-        grid-template-rows: repeat(5, 1fr);
+        grid-template-rows: repeat(3, 1fr);
         gap: 1px 1px;
         grid-template-areas:
                            "add-goal-title add-goal-title-value"
                            "add-goal-rank add-goal-rank-value"
-                           "add-goal-deadline add-goal-deadline-value"
-                           "add-goal-subtasks add-goal-subtasks"
-                           ". add-goal-submit";
+                           "add-goal-deadline add-goal-deadline-value";
     }
 
     .add-goal-title { grid-area: add-goal-title; }
@@ -27,10 +24,21 @@
 
     .add-goal-deadline-value { grid-area: add-goal-deadline-value; }
 
-    .add-goal-submit { grid-area: add-goal-submit; }
+    .add-goal-submit { float: right;
+        flex: 0 0 100%;
+    }
 
-    .add-goal-subtasks { grid-area: add-goal-subtasks; }
+    .subtasks {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+    }
 
+    .subtask-input { box-sizing:content-box; }
+
+    .add-goal-subtasks {
+        flex: 0 0 100%;
+    }
 </style>
 <EditForm Model="@_addGoalModel" OnValidSubmit="HandleSubmitAsync">
     <DataAnnotationsValidator />
@@ -60,23 +68,25 @@
         <div class="add-goal-deadline-value">
             <InputDate @bind-Value="_addGoalModel.Deadline"/>
         </div>
-        <div class="add-goal-subtasks">
-            <table>
-                @foreach (var subtask in _addGoalModel.Subtasks)
-                {
+        <div class="subtasks">
+            <div class="add-goal-subtasks">
+                <table>
+                    @foreach (var subtask in _addGoalModel.Subtasks)
+                    {
+                        <tr>
+                            <td><InputText @bind-Value="subtask.Title" class="subtask-input"/></td>
+                            <td><button @onclick="() => DeleteSubtask(subtask)">🗙</button></td>
+                        </tr>
+                    }
                     <tr>
-                        <td><InputText @bind-Value="subtask.Title"/></td>
-                        <td><button @onclick="() => DeleteSubtask(subtask)">🗙</button></td>
+                        <td><input @bind="_newSubtask" /></td>
+                        <td><button @onclick="() => AddSubtask(_newSubtask)">+</button></td>
                     </tr>
-                }
-                <tr>
-                    <td><input @bind="_newSubtask" /></td>
-                    <td><button @onclick="() => AddSubtask(_newSubtask)">+</button></td>
-                </tr>
-            </table>
-        </div>
-        <div class="add-goal-submit">
-            <button style="float: right;" type="submit">Add Goal</button>
+                </table>
+            </div>
+            <div class="add-goal-submit">
+                <button style="float: right;" type="submit">Add Goal</button>
+            </div>
         </div>
     </div>
 </EditForm>
