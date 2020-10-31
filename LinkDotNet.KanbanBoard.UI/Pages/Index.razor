@@ -7,18 +7,6 @@
 @using Grpc.Core
 @inject Kanban.KanbanClient KanbanClient
 @inherits BlazorState.BlazorStateComponent
-<style type="text/css">
-    .kanban-header {
-        width: 100%;
-        top: 0;
-        left: 0;
-        background-color: #A7A7A7;
-        color: #262626;
-    }
-</style>
-<div class="kanban-header">
-        <h2>Kanban Board</h2>
-    </div>
 <div class="content">
     @if (GoalState == null)
     {

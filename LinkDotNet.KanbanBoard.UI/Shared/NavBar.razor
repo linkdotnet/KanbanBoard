@@ -1,0 +1,51 @@
+﻿<style>
+    .navbar-content {
+        color: #e5e5e5;
+        border-bottom: 1px solid #e5e5e5;
+        vertical-align: bottom;
+    }
+
+    .navbar-home {
+        font-size: 36px;
+        font-weight: 900;
+    }
+
+    .navbar-entry {
+        font-size: 20px;
+        font-weight: 500;
+        margin-left: 2rem;
+    }
+
+    .navbar-entry:active {
+        font-size: 20px;
+        font-weight: 900;
+    }
+
+    .navbar-entry .active {
+        font-size: 20px;
+        font-weight: 900;
+    }
+
+    .navbar-content a {
+        color: #e5e5e5;
+        text-decoration: none;
+        display:block;
+    }
+
+    .navbar-links ul {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction:row;
+        justify-content: flex-start;
+        list-style: none;
+    }
+</style>
+<nav class="navbar-content">
+    <div class="navbar-links">
+        <ul>
+            <li class="navbar-home"><NavLink href="">KnBn</NavLink></li>
+            <li class="navbar-entry"><NavLink href="Day">Day</NavLink></li>
+            <li class="navbar-entry"><NavLink href="Week">Week</NavLink></li>
+        </ul>
+    </div>
+</nav>
