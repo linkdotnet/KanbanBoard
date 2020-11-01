@@ -27,7 +27,9 @@ namespace LinkDotNet.KanbanBoard.Domain
 
         public Rank Rank { get; private set; }
 
-        public GoalStatus GoalStatus { get; set; }
+        public GoalStatus GoalStatus { get; private set; }
+
+        public Label Label { get; private set; }
 
         [JsonIgnore]
         public bool HasDeadline => Deadline != default;
@@ -36,6 +38,16 @@ namespace LinkDotNet.KanbanBoard.Domain
 
         [JsonIgnore]
         public bool IsOverdue => HasDeadline && Deadline < DateTime.Now;
+
+        public void SetGoalStatus(GoalStatus newStatus)
+        {
+            GoalStatus = newStatus ?? throw new ArgumentNullException(nameof(newStatus), "GoalStatus can not be null");
+        }
+
+        public void SetLabel(Label label)
+        {
+            Label = label;
+        }
 
         public static Result<Goal> Create(string title, Rank rank, GoalStatus goalStatus, IEnumerable<Subtask> subtasks,
             DateTime? deadline)

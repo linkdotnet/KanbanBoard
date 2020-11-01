@@ -60,7 +60,7 @@ namespace LinkDotNet.KanbanBoard.UI.Features
             protected override async Task<Unit> InnerHandleAsync(ChangeGoalStatusAction aAction, CancellationToken aCancellationToken)
             {
                 var goal = GoalState._goals.Single(g => g.Id == aAction.Id);
-                goal.GoalStatus = aAction.NewStatus;
+                goal.SetGoalStatus(aAction.NewStatus);
                 await _kanbanClient.UpdateGoalAsync(goal.ToGoalDto());
 
                 return Unit.Value;

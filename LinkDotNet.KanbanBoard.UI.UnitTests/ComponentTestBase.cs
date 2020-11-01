@@ -7,7 +7,7 @@ using TestContext = Bunit.TestContext;
 
 namespace LinkDotNet.KanbanBoard.UI.UnitTests
 {
-    public class ComponentTestBase : IDisposable
+    public abstract class ComponentTestBase : IDisposable
     {
         private TestContext _context;
 
