@@ -9,6 +9,7 @@ namespace LinkDotNet.KanbanBoard.UI.UnitTests
         private DateTime? _deadline;
         private Rank _rank = Rank.Important;
         private GoalStatus _status = GoalStatus.Todo;
+        private bool _isDeleted;
 
         public GoalBuilder WithTitle(string title)
         {
@@ -34,6 +35,12 @@ namespace LinkDotNet.KanbanBoard.UI.UnitTests
             return this;
         }
 
+        public GoalBuilder WithIsDeleted(bool isDeleted)
+        {
+            _isDeleted = isDeleted;
+            return this;
+        }
+
         public Goal Build()
         {
             var goalResult = Goal.Create(_title, _rank, _status, Array.Empty<Subtask>(), _deadline);
@@ -41,6 +48,8 @@ namespace LinkDotNet.KanbanBoard.UI.UnitTests
             {
                 throw new ArgumentException($"Could not create {nameof(Goal)}: {goalResult.Error}");
             }
+
+            goalResult.Value.IsDeleted = _isDeleted;
 
             return goalResult.Value;
         }

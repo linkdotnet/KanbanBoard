@@ -26,10 +26,7 @@ namespace LinkDotNet.KanbanBoard.UI.UnitTests.Components
         public void GivenAbilityToAddGoals_WhenAddingSwimlane_ThenButtonVisible()
         {
             var goalContainer = CreateGoalContainer();
-            var parameterBuilder = new ComponentParameterBuilder<Swimlane>().Add(s => s.CanAddGoals, true)
-                .Add(s => s.GoalStatus, GoalStatus.Completed)
-                .Add(goalContainer)
-                .Build();
+            var parameterBuilder = CreateSwimlaneComponent(goalContainer, GoalStatus.Todo, true);
 
             var swimlane = RenderComponent<Swimlane>(parameterBuilder.ToArray());
             var addGoalButton = swimlane.Find(".button-add-goal");
@@ -41,10 +38,7 @@ namespace LinkDotNet.KanbanBoard.UI.UnitTests.Components
         public void GivenNotAbilityToAddGoals_WhenAddingSwimlane_ThenButtonIsInvisible()
         {
             var goalContainer = CreateGoalContainer();
-            var parameterBuilder = new ComponentParameterBuilder<Swimlane>().Add(s => s.CanAddGoals, false)
-                .Add(s => s.GoalStatus, GoalStatus.Completed)
-                .Add(goalContainer)
-                .Build();
+            var parameterBuilder = CreateSwimlaneComponent(goalContainer, GoalStatus.Todo, false);
 
             var swimlane = RenderComponent<Swimlane>(parameterBuilder.ToArray());
             var addGoalButtonCount = swimlane.FindAll(".button-add-goal").Count;
@@ -59,10 +53,7 @@ namespace LinkDotNet.KanbanBoard.UI.UnitTests.Components
             var goalInProgress = CreateGoal(goalStatus);
             var goalInTodo = CreateGoal(GoalStatus.Todo);
             var goalContainer = CreateGoalContainer(goalInProgress, goalInTodo);
-            var parameterBuilder = new ComponentParameterBuilder<Swimlane>().Add(s => s.CanAddGoals, false)
-                .Add(s => s.GoalStatus, goalStatus)
-                .Add(goalContainer)
-                .Build();
+            var parameterBuilder = CreateSwimlaneComponent(goalContainer, goalStatus);
 
             var swimlane = RenderComponent<Swimlane>(parameterBuilder.ToArray());
             var count = swimlane.FindComponents<TodoTile>().Count;
@@ -74,6 +65,16 @@ namespace LinkDotNet.KanbanBoard.UI.UnitTests.Components
         {
             var goalContainerComponent = RenderComponent<GoalContainer>(g => g.Add(s => s.Goals, goals ?? Array.Empty<Goal>()));
             return goalContainerComponent.Instance;
+        }
+
+        private static ComponentParameterCollection CreateSwimlaneComponent(GoalContainer goalContainer, GoalStatus goalStatus, bool canAddGoals = false)
+        {
+            var parameterBuilder = new ComponentParameterCollectionBuilder<Swimlane>()
+                .Add(s => s.CanAddGoals, canAddGoals)
+                .Add(s => s.GoalStatus, goalStatus)
+                .Add(s => s.GoalContainer, goalContainer)
+                .Build();
+            return parameterBuilder;
         }
 
         private Goal CreateGoal(GoalStatus status)
