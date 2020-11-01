@@ -7,7 +7,6 @@
         border-radius: 5px;
         box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
         transition: 0.3s;
-        background-color: #479A59;
     }
 
     .tile:hover {
@@ -78,7 +77,7 @@
         float: right;
     }
 </style>
-<div class="tile">
+<div class="tile" style="background-color: @TileColor">
     <div class="tile-header">
         <button class="transparent-button" @onclick="DeleteGoalAsync">
             🗙
@@ -110,6 +109,8 @@
     public Goal Goal { get; set; }
 
     private string OverDueClass => Goal.IsOverdue ? "overdue" : string.Empty;
+
+    private string TileColor => Goal.Label?.HexColor ?? "#479A59";
 
     private string GetShortDeadline()
     {

@@ -27,6 +27,11 @@ message GoalRankChangedDto {
 	string GoalStatus = 2;
 }
 
+message LabelDto {
+	string LabelName = 1;
+	string HexColor = 2;
+}
+
 message GoalDto {
     string Title = 1;
     int64 Deadline = 2;
@@ -35,6 +40,7 @@ message GoalDto {
 	string GoalStatus = 5;
 	string Id = 6;
 	bool IsDeleted = 7;
+	LabelDto LabelDto = 8;
 }
 
 service Kanban {

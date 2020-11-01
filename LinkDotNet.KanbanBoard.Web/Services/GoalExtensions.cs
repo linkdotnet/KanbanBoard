@@ -22,6 +22,15 @@ namespace LinkDotNet.KanbanBoard.Web.Services
                 goalDto.Id = goal.Id;
             }
 
+            if (goal.Label != null)
+            {
+                goalDto.LabelDto = new LabelDto
+                {
+                    LabelName = goal.Label.LabelName,
+                    HexColor = goal.Label.HexColor,
+                };
+            }
+
             goalDto.Subtasks.AddRange(goal.Subtasks.Select(s => new SubtaskDto { Title = s.Title }));
 
             return goalDto;
@@ -37,6 +46,11 @@ namespace LinkDotNet.KanbanBoard.Web.Services
             var goal = Goal.Create(goalDto.Title, rank, status, subtasks, deadline).Value;
             goal.Id = string.IsNullOrEmpty(goalDto.Id) ? null : goalDto.Id;
             goal.IsDeleted = goalDto.IsDeleted;
+            if (goalDto.LabelDto != null)
+            {
+                var label = Label.Create(goalDto.LabelDto.LabelName, goalDto.LabelDto.HexColor).Value;
+                goal.SetLabel(label);
+            }
             return goal;
         }
     }
