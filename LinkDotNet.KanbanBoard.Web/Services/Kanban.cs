@@ -24,7 +24,7 @@ namespace LinkDotNet.KanbanBoard.Web.Services
         public override async Task<GoalAdded> AddGoal(GoalDto request, ServerCallContext context)
         {
             var goal = request.ToGoal();
-            await _kanbanRepository.AddGoalAsync(goal);
+            await _kanbanRepository.StoreGoalAsync(goal);
             request.Id = goal.Id;
 
             return new GoalAdded
@@ -36,7 +36,7 @@ namespace LinkDotNet.KanbanBoard.Web.Services
         public override async Task<Empty> UpdateGoal(GoalDto request, ServerCallContext context)
         {
             var goal = request.ToGoal();
-            await _kanbanRepository.UpdateGoalAsync(goal);
+            await _kanbanRepository.StoreGoalAsync(goal);
             return new Empty();
         }
     }

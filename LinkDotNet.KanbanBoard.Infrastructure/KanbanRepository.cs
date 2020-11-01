@@ -10,9 +10,7 @@ namespace LinkDotNet.KanbanBoard.Infrastructure
     {
         Task<IEnumerable<Goal>> GetAllGoalsAsync(bool retrieveDeleted);
 
-        Task AddGoalAsync(Goal goal);
-
-        Task UpdateGoalAsync(Goal goal);
+        Task StoreGoalAsync(Goal goal);
     }
 
     public class KanbanRepository : IKanbanRepository
@@ -35,14 +33,7 @@ namespace LinkDotNet.KanbanBoard.Infrastructure
             return await session.Query<Goal>().Where(g => g.IsDeleted == false).ToListAsync();
         }
 
-        public async Task AddGoalAsync(Goal goal)
-        {
-            using var session = _documentStore.OpenAsyncSession();
-            await session.StoreAsync(goal);
-            await session.SaveChangesAsync();
-        }
-
-        public async Task UpdateGoalAsync(Goal goal)
+        public async Task StoreGoalAsync(Goal goal)
         {
             using var session = _documentStore.OpenAsyncSession();
             await session.StoreAsync(goal);
