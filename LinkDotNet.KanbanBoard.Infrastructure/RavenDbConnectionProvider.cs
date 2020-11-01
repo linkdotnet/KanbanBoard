@@ -1,7 +1,4 @@
-﻿using Raven.Client;
-using Raven.Client.Documents;
-using Raven.Client.Documents.Conventions;
-using Raven.Client.Json.Serialization.NewtonsoftJson;
+﻿using Raven.Client.Documents;
 
 namespace LinkDotNet.KanbanBoard.Infrastructure
 {
