@@ -29,16 +29,31 @@
     }
 
     .subtasks {
-        display: flex;
         flex-wrap: wrap;
         flex-direction: column;
+        margin-top: 10px;
     }
 
-    .subtask-input { box-sizing:content-box; }
-
-    .add-goal-subtasks {
-        flex: 1;
+    .subtask-input { 
+        box-sizing:content-box;
+        width: 90%;
     }
+
+    .add-goal-subtasks-table {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .subgoal-cell {
+        box-sizing: border-box;
+        flex-grow: 1;
+        width: 100%;
+        padding-bottom: 5px;
+        overflow: hidden;
+        list-style: none;
+    }
+
+    .subgoal-table-2cols > .subgoal-cell  { width: 50%; }
 </style>
 <EditForm Model="@_addGoalModel" OnValidSubmit="HandleSubmitAsync">
     <DataAnnotationsValidator />
@@ -70,24 +85,20 @@
         </div>
     </div>
     <div class="subtasks">
-        <div class="add-goal-subtasks">
-            <table>
-                @foreach (var subtask in _addGoalModel.Subtasks)
-                {
-                    <tr>
-                        <td><InputText @bind-Value="subtask.Title" class="subtask-input"/></td>
-                        <td><button type="button" @onclick="() => DeleteSubtask(subtask)">🗙</button></td>
-                    </tr>
-                }
-                <tr>
-                    <td><input @bind="_newSubtask" /></td>
-                    <td><button type="button"  @onclick="() => AddSubtask(_newSubtask)">+</button></td>
-                </tr>
-            </table>
+        <span>Add subtasks</span>
+        <div class="add-goal-subtasks-table subgoal-table-2cols">
+            @foreach (var subtask in _addGoalModel.Subtasks)
+            {
+                <div class="subgoal-cell"><InputText @bind-Value="subtask.Title" class="subtask-input"/></div>
+                <div class="subgoal-cell"><button type="button" @onclick="() => DeleteSubtask(subtask)">🗙</button></div>
+            }
+            <div class="subgoal-cell"><input @bind="_newSubtask" class="subtask-input"/></div>
+            <div class="subgoal-cell"><button type="button" @onclick="() => AddSubtask(_newSubtask)">+</button></div>
         </div>
-        <div class="add-goal-submit">
-            <button style="float: right;" type="submit">Add Goal</button>
-        </div>
+    </div>
+
+    <div class="add-goal-submit">
+        <button style="float: right;" type="submit">Add Goal</button>
     </div>
 </EditForm>
 
