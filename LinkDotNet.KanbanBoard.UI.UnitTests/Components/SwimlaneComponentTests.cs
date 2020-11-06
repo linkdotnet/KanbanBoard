@@ -2,6 +2,8 @@
 using System.Linq;
 using BlazorState;
 using Bunit;
+using Bunit.TestDoubles;
+
 using LinkDotNet.KanbanBoard.Domain;
 using LinkDotNet.KanbanBoard.UI.Components;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -20,6 +22,7 @@ namespace LinkDotNet.KanbanBoard.UI.UnitTests.Components
             {
                 typeof(Swimlane).Assembly
             });
+            Services.AddMockJSRuntime();
         }
 
         [TestMethod]
