@@ -13,10 +13,12 @@ The following features are fully working:
  * Displaying Goals, which were created before
  * Moving Goals in between lanes
  * Deleting Goals
+ * Adding Subtasks to Goals
 
  The following technologies are working:
   * RavenDB as Database
   * ASP.NET Core Backend with gRPC Endpoints
   * Blazor WASM with gRPC Client (gRPC Web)
   * Blazor State-Handling
-  * Some Component Unit tests for Blazor
+  * Component Unit tests for Blazor
+  * .NET 5 driven

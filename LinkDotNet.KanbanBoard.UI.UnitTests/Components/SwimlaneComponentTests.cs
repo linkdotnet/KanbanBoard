@@ -50,6 +50,7 @@ namespace LinkDotNet.KanbanBoard.UI.UnitTests.Components
         }
 
         [TestMethod]
+        [Ignore("Virtualize is currently not supported in bUnit. The component will never be rendered and therefore has no elements")]
         public void GivenDifferentGoalStatus_WhenAddingToSwimlane_ThenOnlyCorrectStatusShown()
         {
             var goalStatus = GoalStatus.InProgress;

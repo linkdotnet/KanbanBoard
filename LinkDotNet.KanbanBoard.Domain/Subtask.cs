@@ -9,7 +9,7 @@ namespace LinkDotNet.KanbanBoard.Domain
 
         public static Result<Subtask> Create(string title)
         {
-            return new Subtask {Title = title};
+            return new Subtask { Title = title };
         }
     }
 }
