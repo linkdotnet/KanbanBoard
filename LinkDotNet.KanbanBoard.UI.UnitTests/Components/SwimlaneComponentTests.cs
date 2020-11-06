@@ -64,13 +64,6 @@ namespace LinkDotNet.KanbanBoard.UI.UnitTests.Components
 
             count.ShouldBe(1);
         }
-
-        private GoalContainer CreateGoalContainer(params Goal[] goals)
-        {
-            var goalContainerComponent = RenderComponent<GoalContainer>(g => g.Add(s => s.Goals, goals ?? Array.Empty<Goal>()));
-            return goalContainerComponent.Instance;
-        }
-
         private static ComponentParameterCollection CreateSwimlaneComponent(GoalContainer goalContainer, GoalStatus goalStatus, bool canAddGoals = false)
         {
             var parameterBuilder = new ComponentParameterCollectionBuilder<Swimlane>()
@@ -81,7 +74,13 @@ namespace LinkDotNet.KanbanBoard.UI.UnitTests.Components
             return parameterBuilder;
         }
 
-        private Goal CreateGoal(GoalStatus status)
+        private GoalContainer CreateGoalContainer(params Goal[] goals)
+        {
+            var goalContainerComponent = RenderComponent<GoalContainer>(g => g.Add(s => s.Goals, goals ?? Array.Empty<Goal>()));
+            return goalContainerComponent.Instance;
+        }
+        
+        private static Goal CreateGoal(GoalStatus status)
         {
             return new GoalBuilder().WithGoalStatus(status).Build();
         }
