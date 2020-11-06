@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TestContext = Bunit.TestContext;
 
-namespace LinkDotNet.KanbanBoard.UI.UnitTests
+namespace LinkDotNet.KanbanBoard.UI.UnitTests.Components
 {
     public abstract class ComponentTestBase : IDisposable
     {
