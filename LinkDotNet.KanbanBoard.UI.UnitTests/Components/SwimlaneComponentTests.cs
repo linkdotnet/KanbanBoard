@@ -73,16 +73,15 @@ namespace LinkDotNet.KanbanBoard.UI.UnitTests.Components
                 .Build();
             return parameterBuilder;
         }
+        private static Goal CreateGoal(GoalStatus status)
+        {
+            return new GoalBuilder().WithGoalStatus(status).Build();
+        }
 
         private GoalContainer CreateGoalContainer(params Goal[] goals)
         {
             var goalContainerComponent = RenderComponent<GoalContainer>(g => g.Add(s => s.Goals, goals ?? Array.Empty<Goal>()));
             return goalContainerComponent.Instance;
-        }
-        
-        private static Goal CreateGoal(GoalStatus status)
-        {
-            return new GoalBuilder().WithGoalStatus(status).Build();
-        }
+        }    
     }
 }
