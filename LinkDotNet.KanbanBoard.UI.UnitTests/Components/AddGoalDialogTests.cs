@@ -31,9 +31,9 @@ namespace LinkDotNet.KanbanBoard.UI.UnitTests.Components
             goalReturned.GoalStatus.ShouldBe(GoalStatus.Todo);
         }
 
-        private IElement GetTitle(IRenderedComponent<AddGoalDialog> addGoalDialog) => addGoalDialog.Find("#add-goal-title-input");
-        private IElement GetRank(IRenderedComponent<AddGoalDialog> addGoalDialog) => addGoalDialog.Find("#add-goal-rank");
-        private IElement GetDeadline(IRenderedComponent<AddGoalDialog> addGoalDialog) => addGoalDialog.Find("#add-goal-deadline");
-        private void SubmitForm(IRenderedComponent<AddGoalDialog> addGoalDialog) => addGoalDialog.Find("form").Submit();
+        private static IElement GetTitle(IRenderedComponent<AddGoalDialog> addGoalDialog) => addGoalDialog.Find("#add-goal-title-input");
+        private static IElement GetRank(IRenderedComponent<AddGoalDialog> addGoalDialog) => addGoalDialog.Find("#add-goal-rank");
+        private static IElement GetDeadline(IRenderedComponent<AddGoalDialog> addGoalDialog) => addGoalDialog.Find("#add-goal-deadline");
+        private static void SubmitForm(IRenderedComponent<AddGoalDialog> addGoalDialog) => addGoalDialog.Find("form").Submit();
     }
 }
