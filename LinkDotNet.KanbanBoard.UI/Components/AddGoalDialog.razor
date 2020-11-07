@@ -63,13 +63,13 @@
             <p>Title: </p>
         </div>
         <div class="add-goal-title-value">
-            <InputText @bind-Value="_addGoalModel.Title" />
+            <InputText id="add-goal-title-input" @bind-Value="_addGoalModel.Title" />
         </div>
         <div class="add-goal-rank">
             <p>Select importance: </p>
         </div>
         <div class="add-goal-rank-value">
-            <InputSelect name="importance" @bind-Value="_addGoalModel.Rank">
+            <InputSelect id="add-goal-rank" name="importance" @bind-Value="_addGoalModel.Rank">
                 <option value="" selected disabled hidden>Choose rank</option>
                 @foreach (var importance in Rank.All)
                 {
@@ -81,7 +81,7 @@
             <p>Select deadline: </p>
         </div>
         <div class="add-goal-deadline-value">
-            <InputDate @bind-Value="_addGoalModel.Deadline"/>
+            <InputDate id="add-goal-deadline" @bind-Value="_addGoalModel.Deadline"/>
         </div>
     </div>
     <div class="subtasks">
@@ -122,6 +122,7 @@
     private void ResetModel()
     {
         _addGoalModel = new AddGoalModel();
+        _newSubtask = string.Empty;
     }
 
     private void DeleteSubtask(SubtaskModel subtaskModel)
