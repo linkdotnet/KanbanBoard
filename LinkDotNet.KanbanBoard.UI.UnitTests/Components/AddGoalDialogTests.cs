@@ -1,10 +1,8 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-using LinkDotNet.KanbanBoard.UI.Components;
+﻿using AngleSharp.Dom;
 using Bunit;
-using AngleSharp.Dom;
 using LinkDotNet.KanbanBoard.Domain;
-using System;
+using LinkDotNet.KanbanBoard.UI.Components;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Shouldly;
 
 namespace LinkDotNet.KanbanBoard.UI.UnitTests.Components
