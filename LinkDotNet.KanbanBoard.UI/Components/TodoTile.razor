@@ -76,6 +76,26 @@
         height: 32px;
         float: right;
     }
+
+    .tile-subtasks {
+        list-style: none;
+        padding-left: 15px;
+    }
+
+    .tile-subtasks li {
+        border-radius: 5px;
+        background: #FEFFF4;
+        width: 75%;
+    }
+
+    .tile-subtasks li p {
+        padding-left: 5px;
+        margin-bottom: 5px;
+    }
+
+    .tile-subtask-container {
+        padding-bottom: 5px;
+    }
 </style>
 <div class="tile" style="background-color: @TileColor">
     <div class="tile-header">
@@ -100,6 +120,14 @@
                     <p id="deadline-text">@GetShortDeadline()</p>
                 </div>
             </div>
+        </div>
+        <div class="tile-subtask-container">
+            <ul class="tile-subtasks">
+                @foreach (var subtask in Goal.Subtasks)
+                {
+                    <li><p>@subtask.Title</p></li>
+                }
+            </ul>
         </div>
     </div>
 </div>
