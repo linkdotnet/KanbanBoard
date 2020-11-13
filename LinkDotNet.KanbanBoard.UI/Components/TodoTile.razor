@@ -46,7 +46,7 @@
         gap: 10px 0;
         grid-template-areas:
                            "rank"
-                           "subgoalcount"
+                           "subtaskcount"
                            "deadline";
     }
 
@@ -69,7 +69,7 @@
     }
 
     .rank { grid-area: rank; }
-    .subgoalcount { grid-area: subgoalcount; }
+    .subtaskcount { grid-area: subtaskcount; }
     .deadline { grid-area: deadline; }
 
     .tile-header {
@@ -113,7 +113,7 @@
                 <div class="rank box">
                     <p>@Goal.Rank.ShortRank</p>
                 </div>
-                <div class="subgoalcount box">
+                <div class="subtaskcount box">
                     <p>@Goal.Subtasks.Count()</p>
                 </div>
                 <div class="deadline box @OverDueClass">
